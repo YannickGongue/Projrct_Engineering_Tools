@@ -1,0 +1,179 @@
+﻿<Window x:Class="EngineeringToolsCV_1.Views.RegisterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EngineeringToolsCV_1.Views"
+        xmlns:Controls="clr-namespace:EngineeringToolsCV_1"
+        mc:Ignorable="d"
+        Height="310" 
+        Width="570"
+        WindowStyle="None"
+        BorderBrush="Transparent">
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="30"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <TextBlock 
+                Text="User registrieren" 
+                Width="120" Height="30" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                FontSize="15" 
+                Margin="5,5,0,0"/>
+              <Controls:IconButton
+                Grid.Column="1" 
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right" 
+                Margin="0,2,3,0" 
+                Background="Red"
+                Width="22" Height="20" 
+                CornerRadius="27" 
+                Click="CloseButton_Click"/>
+		 
+		        <Controls:IconButton 
+                Grid.Column="1"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"  
+                Margin="0,2,32,0"
+                Background="Yellow" 
+                Width="22" Height="20"
+                CornerRadius="27" 
+                Click="MinimizeButton_Click"/>
+		 
+		        <Controls:IconButton 
+                Grid.Column="1" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right" 
+                Margin="0,2,60,0"
+                Background="Green" 
+                Width="22" 
+                Height="20"
+                CornerRadius="27" 
+                Click="MaximizeButton_Click" />
+            <Label
+                Style="{StaticResource LabelStyle}" 
+                Grid.Column="0" 
+                Grid.Row="1" 
+                Content="{StaticResource LabelBenutzername}" 
+                Margin="5,2,0,0"/>
+            <Label 
+                Style="{StaticResource LabelStyle}" 
+                Grid.Column="0" 
+                Grid.Row="2" 
+                Content="{StaticResource LabelPasswort}"
+                Margin="5,2,0,0"/>
+            <Label 
+                Style="{StaticResource LabelStyle}"
+                Content="{StaticResource LabelPasswortBestätig}" 
+                Grid.Row="3" Grid.Column="0"  
+                Margin="5,2,0,0" 
+                Width="240" 
+                Height="50" 
+                FontSize="26"/>
+            <Label
+                Style="{StaticResource LabelStyle}" 
+                Content="{StaticResource LabelEmail Adresse}" 
+                Grid.Row="4" 
+                Grid.Column="0" 
+                Margin="5,2,0,0" 
+                Width="240" 
+                Height="50" 
+                FontSize="26"/>
+            <TextBox
+                Name="ConfirmPasswort"
+                Style="{StaticResource TextBoxStyle}"
+                Text="{Binding Path=ConfirmPassword}"
+                Grid.Column="1" 
+                Grid.Row="3"/>
+            <TextBox 
+                Text="{Binding Path=Username}"
+                Name="Username"
+                Grid.Row="1" 
+                Grid.Column="1"
+                Style="{StaticResource TextBoxStyle}"/>
+            <TextBox 
+                Text="{Binding Path=Password}"
+                Style="{StaticResource TextBoxStyle}"
+                Name="Password"
+                Grid.Row="2" 
+                Grid.Column="1" />
+            <TextBox 
+                Text="{Binding Path=EmailAdress}"
+                Name="Email"             
+                Grid.Row="4"
+                Grid.Column="1" 
+                Style="{StaticResource TextBoxStyle}"/>
+            <Controls:IconButton 
+                Grid.Column="1" 
+                Grid.Row="5" 
+                CornerRadius="7" 
+                Width="120" 
+                Height="40" 
+                PathData="{StaticResource Cancel-Icon}" 
+                Text="{StaticResource ButtonAbbrechen}" 
+                Background="RoyalBlue" 
+                Foreground="AliceBlue" 
+                BorderBrush="Gray" 
+                BorderThickness="2" 
+                HorizontalAlignment="Left" 
+                Margin="10,0,0,0" 
+                FontSize="18" 
+                Click="CancelButton_Click" 
+                Command="{Binding CancelCommand}"/>
+            <Controls:IconButton  
+                Grid.Column="1" 
+                Grid.Row="5" 
+                CornerRadius="7" 
+                Width="120" 
+                Height="40" 
+                Text="{StaticResource ButtonRegistrieren}" 
+                PathData="{StaticResource register}"
+                Background="RoyalBlue" 
+                Foreground="AliceBlue" 
+                BorderBrush="Gray" 
+                BorderThickness="2" 
+                HorizontalAlignment="Right"
+                Margin="10,0,10,0" 
+                FontSize="18" 
+                Command="{Binding regCommand }"
+                Click="RegisterButton_Click" 
+                Cursor="Hand"/>
+        </Grid>
+</Window>

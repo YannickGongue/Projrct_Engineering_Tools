@@ -1,0 +1,76 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- Dashboard -->
+    <system:String x:Key="LabelInformation" >Informationen</system:String>
+    <system:String x:Key="LabelBerufserfahrung">Experience</system:String>
+    <system:String x:Key="LabelProjekt">Project</system:String>
+    <system:String x:Key="LabelAusbildung">Formation</system:String>
+    <system:String x:Key="LabelQualifikation">Qualifications</system:String>
+    <system:String x:Key="LabelSozialeMedien">Social media</system:String>
+    <system:String x:Key="LabelTätigkeiten">Activities</system:String>
+    <system:String x:Key="LabelInteressen">Interests</system:String>
+    <system:String x:Key="LabelKonfigurationen">Configurations</system:String>
+    <!-- StartSeite -->
+    <system:String x:Key="LabelBenutzername">Username* :</system:String>
+    <system:String x:Key="LabelPasswort">Password* :</system:String>
+    <system:String x:Key="LabelPasswortBestätig">Passwort confirm* :</system:String>
+    <system:String x:Key="LabelEmail Adresse">Email Adress* :</system:String>
+    <system:String x:Key="LabelBenutzernameAngeben">Enter username and password</system:String>
+    <system:String x:Key="LabelPasswordAnzeigen">show password</system:String>
+    <system:String x:Key="LinkButtonBenutzerRegistrieren">Register users</system:String>
+    <system:String x:Key="LinkButtonBenutzerResetzen">Reset user</system:String>
+    <system:String x:Key="TextStartSeite">Starting to Create your Best CV</system:String>
+    <!-- Personal Data -->
+    <system:String x:Key="LabelPersonalData">Personal Data</system:String>
+    <system:String x:Key="LabelTitle">Title* :</system:String>
+    <system:String x:Key="LabelNachname">Last Name* :</system:String>
+    <system:String x:Key="LabelVorname">First Name* :</system:String>
+    <system:String x:Key="LabelEmail">Email* :</system:String>
+    <system:String x:Key="LabelStraße">Street* :</system:String>
+    <system:String x:Key="LabelStraßnummer">Street number* :</system:String>
+    <system:String x:Key="LabelPostleitzahl">Postal code* :</system:String>
+    <system:String x:Key="LabelStadt">City* :</system:String>
+    <system:String x:Key="LabelGeburtsdatum">Date Of Birth* :</system:String>
+    <system:String x:Key="LabelGeburtsort">Country of birth* :</system:String>
+    <system:String x:Key="ButtonAbbrechen">Cancel</system:String>
+    <system:String x:Key="ButtonSpeichern">Save</system:String>
+    <system:String x:Key="ButtonEditieren">Edit</system:String>
+    <system:String x:Key="ButtonSuchen">Search</system:String>
+    <system:String x:Key="Buttonhinzufügen">add</system:String>
+    <system:String x:Key="ButtonEntfernen">remove</system:String>
+    <system:String x:Key="ButtonStarten">Start</system:String>
+    <system:String x:Key="ButtonResetzen">reset</system:String>
+    <system:String x:Key="ButtonRegistrieren">register</system:String>
+    <system:String x:Key="ButtonAnmelden">Login</system:String>
+    <system:String x:Key="ButtonFotoHerunterladen">photo download</system:String>
+    <system:String x:Key="ButtonSenden">Send to the List</system:String>
+
+    <system:String x:Key="GroupLabelPersonalDaten">Personal Data</system:String>
+    <system:String x:Key="ListLabelPerson">Persons</system:String>
+    <system:String x:Key="LabelServerType">Servertype :</system:String>
+    <system:String x:Key="LabelServerName">Servername :</system:String>
+    <system:String x:Key="LabelAuthentifizierung">Authentification :</system:String>
+    <system:String x:Key="ButtonVerbindung">connect</system:String>
+
+	<!-- Expereinces -->
+	<system:String x:Key="GrTitel">Edit Work Experience</system:String>
+	<system:String x:Key="LabelTitel">Title*</system:String>
+	<system:String x:Key="LabelBeschäftigung">Terms of employment*</system:String>
+	<system:String x:Key="LabelUnternehmen">Company or Organization</system:String>
+	<system:String x:Key="ChekboxTätig">I am currently employed in this position</system:String>
+	<system:String x:Key="LabelStartDatum">Start Date*</system:String>
+	<system:String x:Key="LabelEndDatum">End Date*</system:String>
+	<system:String x:Key="LabelStandort">Location*</system:String>
+	<system:String x:Key="LabelOrtTyp">Location Type*</system:String>
+	<system:String x:Key="LabelBeschreibung">Description</system:String>
+	<system:String x:Key="LabelSkills">Skills</system:String>
+	<system:String x:Key="LabelBerufsEmail">Email*</system:String>
+
+	<system:String x:Key="TxtBerufserfahrung">Work Experience</system:String>
+	<system:String x:Key="txtProfil">Profile</system:String>
+	<system:String x:Key="txtProjekt">Project</system:String>
+
+	<system:String x:Key="ButtonDelete">Delete Work Experience</system:String>
+</ResourceDictionary>

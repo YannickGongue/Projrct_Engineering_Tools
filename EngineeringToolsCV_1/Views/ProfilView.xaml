@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="EngineeringToolsCV_1.Views.ProfilView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EngineeringToolsCV_1.Views"
+             xmlns:Controls="clr-namespace:EngineeringToolsCV_1"
+             mc:Ignorable="d" 
+             Height="670"
+				 Width="830">
+	<UserControl.Resources>
+		<Style TargetType="{x:Type TextBox}" x:Key="TextboxStyle">
+			<Setter Property="HorizontalContentAlignment" Value ="Center"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="TextBox">
+						<Border BorderThickness="{TemplateBinding BorderThickness}"
+                      Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}"
+                      CornerRadius="4">
+							<ContentPresenter 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="BorderBrush" Value="red" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+	</UserControl.Resources>
+	<Grid>
+		<Border
+    BorderBrush="CornflowerBlue"
+BorderThickness="1"
+Margin="10,18,10,0"
+Height="40"
+CornerRadius="10"
+VerticalAlignment="Top"/>
+		
+<TextBlock
+  Text="{StaticResource txtProfil}" 
+  VerticalAlignment ="Top" 
+  HorizontalAlignment="Center"  
+  FontSize="22"
+  Width="180" 
+  Foreground="CornflowerBlue"
+  Margin="28,18,0,0"/>
+
+  <Controls:IconButton 
+    Command="{Binding NavigateUpdateCommand }"
+    CornerRadius="1" 
+    Width="80"                  
+    Height="45"                        
+    PathData="{StaticResource Edit}"                       
+    VerticalAlignment="Top"
+    HorizontalAlignment="Right"       
+    Cursor="Hand"
+    Margin="0,15,-10,2"
+    Foreground="CornflowerBlue"
+	 IconColor="RoyalBlue"/>
+
+
+  <Controls:IconButton 
+    Command="{Binding NavigateReturnCommand }"
+    CornerRadius="1" 
+    Width="120"                  
+    Height="40"                        
+    PathData="{StaticResource left-Arrow}"                     
+    VerticalAlignment="Top"
+    HorizontalAlignment="Left"            
+    Cursor=""
+    Margin="-20,15,25,2"
+    Foreground="CornflowerBlue"
+	 IconColor="RoyalBlue"/>
+
+		<TextBlock Text="Profil"
+					  VerticalAlignment="Center" 
+					  HorizontalAlignment="Center" 
+					  FontSize="50" Width="402"/>
+	</Grid>
+</UserControl>
