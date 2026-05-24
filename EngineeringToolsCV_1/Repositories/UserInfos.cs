@@ -119,10 +119,11 @@ namespace EngineeringToolsCV_1.Repositories
             return await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task<DataTable> SearchStudentInfosAsync(string search)
+        public async Task<MStudentInformations> SearchStudentInfosAsync(string search)
         {
-            var dt = new DataTable();
-            string strQuery = String.Format("SELECT {1},{2},{3},{4},{5},{6},{7},{8},{9} FROM {0} WHERE {10}= @1",
+			 MStudentInformations studentInfo = null;
+			
+			 string strQuery = String.Format("SELECT {1},{2},{3},{4},{5},{6},{7},{8},{9} FROM {0} WHERE {10}= @1",
                                              this._dbName.strTBL_StudentsInfo, this._dbName.strName,
                                              this._dbName.strVorname, this._dbName.strEmail,
                                              this._dbName.strStraße, this._dbName.strNummer,
@@ -134,16 +135,27 @@ namespace EngineeringToolsCV_1.Repositories
             cmd.Connection = conn;
 
             cmd.Parameters.AddWithValue("@1", search);
-
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = strQuery;
-
-            var adapter = new SqlDataAdapter(cmd);
-            
-             await conn.OpenAsync();
-             adapter.Fill(dt);
-                     
-            return dt;
+           using (SqlDataReader reader = await cmd.ExecuteReaderAsync()) { 
+           if(await reader.ReadAsync())
+            {
+               studentInfo = new MStudentInformations
+               {
+                   Id = reader[this._dbName.strId].ToString(),
+                   Name = reader[this._dbName.strName].ToString(),
+                   Vorname = reader[this._dbName.strVorname].ToString(),
+                   Email = reader[this._dbName.strEmail].ToString(),
+                   Straße = reader[this._dbName.strStraße].ToString(),
+                   Straßenummer = reader[this._dbName.strNummer].ToString(),
+                   Postleitzahl = reader[this._dbName.strPostleitzahl].ToString(),
+                   Stadt = reader[this._dbName.strStadt].ToString(),
+                   Datum = reader[this._dbName.strDatum].ToString(),
+                   Land = reader[this._dbName.strLand].ToString()
+               };
+            }
+         
+           }
+                               
+            return studentInfo;
         }
 
         public async Task<int> UpdateUserInfosAsync(MUser info)

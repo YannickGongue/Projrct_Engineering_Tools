@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,6 @@ namespace EngineeringToolsCV_1.Service
 {
 	public interface IFileDialogService
 	{
-
+		OpenFileDialog OpenImageFileDialog();
 	}
 }

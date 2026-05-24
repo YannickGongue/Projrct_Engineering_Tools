@@ -16,7 +16,7 @@ namespace EngineeringToolsCV_1.DatabaseManager
             this._userWorkInfo = userWorkInfo;
         }
 
-        public Task<DataTable> SearchStudentInfosAsync(string search)
+        public Task<MStudentInformations> SearchStudentInfosAsync(string search)
         {
             return _userInfo.SearchStudentInfosAsync(search);
         }

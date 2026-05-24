@@ -20,7 +20,7 @@ namespace EngineeringToolsCV_1.Models
 
         Task<int> RemoveStudentInfosAsync(string studentId);
 
-        Task<DataTable> SearchStudentInfosAsync(string search);
+        Task<MStudentInformations> SearchStudentInfosAsync(string search);
        
     }
 }

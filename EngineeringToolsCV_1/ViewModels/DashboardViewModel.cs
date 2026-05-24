@@ -18,18 +18,17 @@ namespace EngineeringToolsCV_1.ViewModels
     {
         private INavigationBarService _navigationBarService;
         private IMessageService _messageService;
-        private I
-		private DbManager _dbManager;
-        private DBName _dbName;
+        private IUserInfo _userInfo;
+        private IImageService _imageService;
+		  private MStudentInformations _mStudent;
 
-        private InformationViewModel VmInfos;
+		  private InformationViewModel VmInfos;
         private BerufViewModel VmBeruf;
         private FormationViewModel VmFormation;
         private InteresseViewModel VmInteresse;
         private ProjektViewModel VmProject;
         private QualificationViewModel VmQualif;
         private SocialMediaViewModel VmSocialMedia;
-        private ErrorMessageViewModel _vmDialogMessage;
 
         private Brush setBackColor;
         private bool setEnable;
@@ -88,10 +87,16 @@ namespace EngineeringToolsCV_1.ViewModels
 
 		public DashboardViewModel(NavigationStore navigationStore, 
                                 INavigationBarService navigationBarService,
-                                IMessageService messageService)
+                                IMessageService messageService,
+                                IUserInfo userInfo,
+                                IImageService imageService,
+                                MStudentInformations mStudent)
         {
             this._navigationBarService = navigationBarService;
             this._messageService = messageService;
+            this._userInfo = userInfo;
+            this._imageService = imageService;
+            this._mStudent = mStudent;
 			   this.executeInfoCommand(navigationStore);
             this.executeBerufCommand(navigationStore);
             this.executeProjektCommand(navigationStore);
@@ -120,11 +125,15 @@ namespace EngineeringToolsCV_1.ViewModels
 
 		  private void executeInfoCommand(NavigationStore navigationStore)
         {
-			   this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard -> Information");
-
             InfoCommand = new NavigateCommand<InformationViewModel>(
                new LayoutNavigationService<InformationViewModel>(navigationStore,
-               () => new InformationViewModel(navigationStore,this._mStudent,this._dbManager,this._dbName,this._vmDialogMessage,this._mUserWorkInfo), navigationBar));
+               () => new InformationViewModel(navigationStore,
+                                              this._imageService,
+                                              this._messageService,
+                                              this._userInfo,
+                                              this._navigationBarService,
+                                              this._mStudent),
+					this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard -> Information")));
         }
 
         private void executeBerufCommand(NavigationStore navigationStore)

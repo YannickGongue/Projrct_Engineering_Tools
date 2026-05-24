@@ -2,6 +2,7 @@
 using EngineeringToolsCV_1.DatabaseManager;
 using EngineeringToolsCV_1.Models;
 using EngineeringToolsCV_1.Repositories;
+using EngineeringToolsCV_1.Service;
 using EngineeringToolsCV_1.Store;
 using EngineeringToolsCV_1.Views;
 using System;
@@ -13,28 +14,15 @@ namespace EngineeringToolsCV_1.ViewModels
 {
     public class BerufViewModel : ViewModelBase
     {
-        private DbManager _dbManager;
-        private MessageDialog dialogMessage;
-        private ErrorMessageViewModel _vmDialogMessage;
-        private DBName _dbName;
-        
-        private NavigationStore navigationStore;
+      private INavigationBarService _navigationBarService;
+      private IMessageService _messageService;
+      private I
+		private NavigationStore navigationStore;
         private NavigationBarViewModel navigationBar;
         private MStudentInformations _mStudentInfos;
         private MUserWorkInfo _mUserWorkInfo;
-
-        //Tabelle Berufserfahrung
-        //public string strTBL_Beruf = "TBLBerufsErfahrung";
-        //public string strDBAufgabe = "Aufgabe";
-        //public string strDBTitel = "Titel";
-        //public string strSBSkills = "Skills";
-        //public string strDBFirma = "Firma";
-        //public string strDBStartDatum = "StartDatum";
-        //public string strDBEndDatum = "EndDatum";
-        //public string strDBStandOrt = "Standort";
-        //public string strDBOrtsTyp = "OrtsTyp";
-        //public string strDBArbeitArt = "ArbeitsArt";
-        //public string strDBBerufEmail = "Email";
+         private IMessageService _messageService;
+          
 
         private string strTitel;
         private string strEmail;
@@ -217,9 +205,6 @@ namespace EngineeringToolsCV_1.ViewModels
         {
             this.navigationStore = navigationStore;
             this._mStudentInfos = mStudentInfos;
-            this._dbManager = dbManager;
-            this._dbName = dbName;
-            this._vmDialogMessage = vmDialogMessage;
             this._mUserWorkInfo = mUserWorkInfo;
             this.StrStartDate = new DateTime();
             this.StrEndDate = new DateTime();

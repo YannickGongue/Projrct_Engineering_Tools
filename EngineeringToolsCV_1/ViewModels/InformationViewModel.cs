@@ -21,15 +21,13 @@ namespace EngineeringToolsCV_1.ViewModels
 {
     public class InformationViewModel : ViewModelBase
     {
-        private string ImagePath;
-        private DbManager _dbManager;
-        private UserInfos userInfosRepositories;
-        private MStudentInformations _mStudentInfos;
-        private ErrorMessageViewModel _dialogMessage;
-        private MessageDialog _DialogView;
-        private DBName _dbName;
-        private DataTable dtTable;
-        private MUserWorkInfo _mUserWorkInfo;
+		  private string ImagePath;
+        private IImageService _imageService;
+        private IMessageService _messageService;
+        private INavigationBarService _navigationBarService;
+		  private readonly IUserInfo _userInfo;
+
+		private MStudentInformations _mStudentInfos;
 
         private string strTitle;
         private string strName;
@@ -361,21 +359,19 @@ namespace EngineeringToolsCV_1.ViewModels
             }
         }
 
-        public InformationViewModel(NavigationStore navigationStore, 
-                                    MStudentInformations mStudentInfos,
-                                    DbManager dbManager,
-                                    DBName dbName,
-                                    ErrorMessageViewModel dialogMessage,
-                                    MUserWorkInfo mUserWorkInfo)
+        public InformationViewModel(NavigationStore navigationStore,
+												IImageService imageService,
+												IMessageService messageService,
+											   IUserInfo userInfo,
+		                              INavigationBarService navigationBarService,
+												MStudentInformations mStudentInfos)
         {
-            this._mStudentInfos = mStudentInfos;
-            this._dbManager = dbManager;
-            this._dbName =  dbName;
-            this._dialogMessage = dialogMessage;
-            this._mUserWorkInfo = mUserWorkInfo;
-            this._DialogView = new MessageDialog();
+			this._imageService = imageService;
+			this._messageService = messageService;
+         this._navigationBarService = navigationBarService;
+         this._userInfo = userInfo;
+			this._mStudentInfos = mStudentInfos;
             this.strDate = new DateTime();
-            this.dtTable = new DataTable();
             CityList = new ObservableCollection<string>
             {
                 "Salzgitter", "Braunschweig", "Hannover", "Hildesheim", "Salder"
@@ -400,95 +396,60 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteSearchMethod(object obj)
         {          
-            DataRow drRow;
 
-            var dtTable = await this._dbManager.SearchStudentInfosAsync(this.Strsearch);
+             this._mStudentInfos = await this._userInfo.SearchStudentInfosAsync(this.Strsearch);
 
             try
             {
-                if (this.dtTable.Rows.Count > 0)
+                if (this._mStudentInfos != null)
                 {
-                    drRow = this.dtTable.Rows[0];
-                    this.StrName = drRow[this._dbName.strName].ToString();
-                    this.StrVorname = drRow[this._dbName.strVorname].ToString();
-                    this.StrEmail = drRow[this._dbName.strEmail].ToString();
-                    this.StrStraße = drRow[this._dbName.strStraße].ToString();
-                    this.StrNummer = drRow[this._dbName.strNummer].ToString();
-                    this.StrPostleitzahl = drRow[this._dbName.strPostleitzahl].ToString();
-                    this.SelectedCity = drRow[this._dbName.strStadt].ToString();
-                    //this.StrDate = Convert.ToDateTime(drRow[this._dbName.strDatum].ToString());
-                    this.strLand = drRow[this._dbName.strLand].ToString();
+                    this.StrName = this._mStudentInfos.Name;
+                    this.StrVorname = this._mStudentInfos.Vorname;
+                    this.StrEmail = this._mStudentInfos.Email;
+                    this.StrStraße = this._mStudentInfos.Straße;
+                    this.StrNummer = this._mStudentInfos.Straßenummer;
+                    this.StrPostleitzahl = this._mStudentInfos.Postleitzahl;
+                    this.SelectedCity = this._mStudentInfos.Stadt;
+                    this.StrDate = Convert.ToDateTime(this._mStudentInfos.Datum);
+                    this.strLand = this._mStudentInfos.Land;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Fehler beim Login:\n{ex.Message}");
+				   this._messageService.ShowErrorMessage(ex.Message);
             }
             
         }
 
-        public ImageSource Foto()
-        {
-            ImageSource imageSourceDefault = null;
-            ImageSource imageSource;
-           
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            try
-            {
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    ImagePath = openFileDialog.FileName;
-                    imageSource = new BitmapImage(new Uri(ImagePath));
-                    return imageSource;
-                } 
-            }
-            catch (Exception ex)
-            {
-                this._dialogMessage.SetErrorMessage = ex.Message.ToString();
-                this._DialogView.DataContext = this._dialogMessage;
-                this._DialogView.Show();
-            }
-
-            return imageSourceDefault;
-        }
-
-        public byte[] ConvertImageToByte(Image img)
-        {
-            MemoryStream ms = new MemoryStream();
-            //img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            return ms.ToArray();
-        }
-
-        public static string ByteArrayToHexString(byte[] bytes)
-        {
-            return "0x" + BitConverter.ToString(bytes).Replace("-", "");
-        }
+        
 
         private void ExecuteLoadMethod(object obj)
         {
             try
             {
-                this.SelectedImage = this.Foto();
+                this.SelectedImage = this._imageService.LoadImage(this.ImagePath);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-            }
-        }
+				  this._messageService.ShowErrorMessage(ex.Message);
+			   }
+		}
 
         public void executeCancelCommand(NavigationStore navigationStore)
-        {
-            navigationBar = new NavigationBarViewModel("Home->Profil-> Dashboard");
+        { 
 
             NavigateCancelCommand = new NavigateCommand<DashboardViewModel>(
                new LayoutNavigationService<DashboardViewModel>(navigationStore,
-               () => new DashboardViewModel(navigationStore,this._mStudentInfos,this._dbManager,this._dbName,this._dialogMessage,this._mUserWorkInfo), navigationBar));
+               () => new DashboardViewModel(navigationStore,
+                                            this._navigationBarService,
+                                            this._messageService,
+                                            this._userInfo,
+                                            this._imageService,
+                                            this._mStudentInfos), 
+               this._navigationBarService.CreateNavigationBar("Home->Profil-> Dashboard")));
           
         }
-
+      
         private bool CanExecute(object obj)
         {
             return true;
@@ -498,9 +459,9 @@ namespace EngineeringToolsCV_1.ViewModels
         {
             int iCount;
            
-            string fileName = Path.GetFileName(ImagePath);
-            string FileType = Path.GetExtension(fileName).ToLower();
-            Byte[] hexData = File.ReadAllBytes(ImagePath);
+            string fileName = this._imageService.FileName(ImagePath);
+            string FileType = this._imageService.FileExtension(ImagePath);
+            Byte[] hexData = this._imageService.ConvertToBytes(ImagePath);
                                                              
             this._mStudentInfos.Id = this.StrTitle;
             this._mStudentInfos.Name = this.StrName;
@@ -578,25 +539,22 @@ namespace EngineeringToolsCV_1.ViewModels
                         this.ColorBirth = Brushes.Red;
                     }
 
-                    this._dialogMessage.SetErrorMessage = "die leeren Feldern sollten ausgefüllt werden";
-                    this._DialogView.DataContext = this._dialogMessage;
-                    this._DialogView.Show();
+                    this._messageService.ShowErrorMessage("die leeren Feldern sollten ausgefüllt werden");
+					
                 }
                 else
                 {
-                    if (await this._dbManager.AddStudentInfosAsync(this._mStudentInfos) > 0)
+                    if (await this._userInfo.AddStudentInfosAsync(this._mStudentInfos) > 0)
                     {
-                        this._dialogMessage.SetErrorMessage = "die Einträgen wurden erfolgreich in die Datenbank hinzugefügt";
-                        this._DialogView.DataContext = this._dialogMessage;
-                        this._DialogView.Show();
+                        this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich in die Datenbank hinzugefügt");
+						
                     }
                 }               
             }
             catch (Exception ex)
             {
-                this._dialogMessage.SetErrorMessage = ex.Message.ToString();
-                this._DialogView.DataContext = this._dialogMessage;
-                this._DialogView.Show();
+                this._messageService.ShowErrorMessage(ex.Message);
+				
             }
             
         }
