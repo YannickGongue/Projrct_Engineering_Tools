@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EngineeringToolsCV_1.Service
 {
-	public interface IAuthenticationService
+	public interface IValidation
 	{
-		Task<int> LoginAsync();
+
 	}
 }

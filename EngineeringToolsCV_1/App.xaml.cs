@@ -38,12 +38,12 @@ namespace EngineeringToolsCV_1
         private ErrorMessageViewModel _vmDialogMessage; 
         private MStudentInformations _mStudent;
         private MUser mUser;
-        private MUserWorkInfo _mUserWorkInfo;
+        private MStudentWorkInfo _mUserWorkInfo;
         private LoginViewModel VmLogin;
         private NewPassordViewModel _vmNewPassword;
         private DbManager dbManager;
-        private UserInfos _userInfo;
-        private UserWorkInfo _userWorkInfo;
+        private StudentInfos _userInfo;
+        private StudentWorkInfo _userWorkInfo;
         private SqlConnectionFactory sqlcon;
         private DBName dbName;
         private readonly IServiceProvider _serviceProvider;
@@ -66,8 +66,8 @@ namespace EngineeringToolsCV_1
          services.AddSingleton(new SqlConnectionFactory(strConnectionString));
 			
            services.AddSingleton<DBName>();
-           services.AddSingleton<UserInfos>();
-         services.AddSingleton<UserWorkInfo>();
+           services.AddSingleton<StudentInfos>();
+         services.AddSingleton<StudentWorkInfo>();
 			services.AddSingleton<DbManager>();
 
 			services.AddSingleton<NavigationStore>();
@@ -76,7 +76,7 @@ namespace EngineeringToolsCV_1
 
 			services.AddTransient<MUser>();
 			services.AddTransient<MStudentInformations>();
-			services.AddTransient<MUserWorkInfo>();
+			services.AddTransient<MStudentWorkInfo>();
 
 			services.AddSingleton<MainWindow>();
 
@@ -89,23 +89,23 @@ namespace EngineeringToolsCV_1
 
 
 
-         this._vmDialogMessage = new ErrorMessageViewModel();
-         this.dbName = new DBName();
-         this.sqlcon = new SqlConnectionFactory(strConnectionString);
-         this._userInfo = new UserInfos(this.sqlcon, this.dbName);
-         this._userWorkInfo = new UserWorkInfo(this.sqlcon, this.dbName);
-         this.dbManager = new DbManager(this._userInfo, this._userWorkInfo);
-         this.mUser = new MUser();
-         this._mUserWorkInfo = new MUserWorkInfo();
-         this._vmNewPassword = new NewPassordViewModel();
-         this.VmLogin = new LoginViewModel(this.navigationStore, this.mUser, this._vmUserReset, this._mStudent, this.dbManager, this.dbName, this._vmDialogMessage, this._mUserWorkInfo);
-         this._mStudent = new MStudentInformations();
-         this._vmRegister = new RegisterViewModel(this.VmLogin, this.mUser, this.dbManager, this.dbName, this._vmDialogMessage);
-         this._vmUserReset = new UserResetViewModel(this._vmNewPassword, this.dbManager, this.dbName, this.mUser);
-         this.navigationStore = new NavigationStore();
-         this.mainWindow = new MainWindow();
-         this._NavigationBar = new NavigationBarViewModel("Home");
-            this.ServerView = new SQLServerView(this._vmRegister,this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo);
+         //this._vmDialogMessage = new ErrorMessageViewModel();
+         //this.dbName = new DBName();
+         //this.sqlcon = new SqlConnectionFactory(strConnectionString);
+         //this._userInfo = new UserInfos(this.sqlcon, this.dbName);
+         //this._userWorkInfo = new UserWorkInfo(this.sqlcon, this.dbName);
+         //this.dbManager = new DbManager(this._userInfo, this._userWorkInfo);
+         //this.mUser = new MUser();
+         //this._mUserWorkInfo = new MUserWorkInfo();
+         //this._vmNewPassword = new NewPassordViewModel();
+         //this.VmLogin = new LoginViewModel(this.navigationStore, this.mUser, this._vmUserReset, this._mStudent, this.dbManager, this.dbName, this._vmDialogMessage, this._mUserWorkInfo);
+         //this._mStudent = new MStudentInformations();
+         //this._vmRegister = new RegisterViewModel(this.VmLogin, this.mUser, this.dbManager, this.dbName, this._vmDialogMessage);
+         //this._vmUserReset = new UserResetViewModel(this._vmNewPassword, this.dbManager, this.dbName, this.mUser);
+         //this.navigationStore = new NavigationStore();
+         //this.mainWindow = new MainWindow();
+         //this._NavigationBar = new NavigationBarViewModel("Home");
+         //   this.ServerView = new SQLServerView(this._vmRegister,this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo);
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

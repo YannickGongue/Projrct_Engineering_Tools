@@ -7,11 +7,11 @@ using EngineeringToolsCV_1.Models;
 
 namespace EngineeringToolsCV_1.IRepository
 {
-    public  interface IUserWorkInfo
+    public  interface IStudentWorkInfo
     {
-        Task<int> AddWorkInfosAsync(MUserWorkInfo info);
+        Task<int> AddWorkInfosAsync(MStudentWorkInfo info);
 
-        Task<int> UpdateWorkInfosAsync(MUserWorkInfo info);
+        Task<int> UpdateWorkInfosAsync(MStudentWorkInfo info);
 
         Task<int> RemoveWorkInfosAsync(string studentId);
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EngineeringToolsCV_1.Models
 {
-    public class MUserWorkInfo
+    public class MStudentWorkInfo
     {
         public string Titel { get; set; }
         public string Aufgabe { get; set; }

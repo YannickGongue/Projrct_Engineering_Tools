@@ -29,7 +29,7 @@ namespace EngineeringToolsCV_1.ViewModels
         private MUser _mUser;
         private DbManager _dbManager;
         private DBName _dbName;
-        private MUserWorkInfo _mUserWorkInfo;
+        private MStudentWorkInfo _mUserWorkInfo;
 
 
         //add a SelectedCulture property
@@ -84,7 +84,7 @@ namespace EngineeringToolsCV_1.ViewModels
                              DbManager dbManager,
                              DBName dbName,
                              ErrorMessageViewModel vmDialogMessage,
-                             MUserWorkInfo mUserWorkInfo)
+                             MStudentWorkInfo mUserWorkInfo)
         {
             this._navigationstore = navigationStore;
             this._userRegister = userRegister;

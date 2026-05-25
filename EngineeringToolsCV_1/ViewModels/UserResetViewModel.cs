@@ -8,15 +8,18 @@ using System.Windows.Media;
 using EngineeringToolsCV_1.DatabaseManager;
 using EngineeringToolsCV_1.Models;
 using System.Data;
+using EngineeringToolsCV_1.IRepository;
+using EngineeringToolsCV_1.Service;
 
 namespace EngineeringToolsCV_1.ViewModels
 {
     public class UserResetViewModel : ViewModelBase
     {
-        private NewPassordViewModel _vmNewPassword;
+        private IUserInfo _userInfo;
+        private IDialogService _dialogService;
+		  private NewPassordViewModel _vmNewPassword;
         private MUser _mUser;
-        private DbManager _dbManager;
-        private DBName _dbName;
+        
         private NewPassword newPassword;
         private string setEmail;
         private bool setIsEnabled;
@@ -64,12 +67,11 @@ namespace EngineeringToolsCV_1.ViewModels
         public ICommand OnSearchCommand { get; set; }
         public ICommand OnResetCommand { get; set; }  
 
-		public UserResetViewModel(NewPassordViewModel vmNewPassword, DbManager dbManager, DBName dbName, MUser mUser)
+		public UserResetViewModel(IUserInfo userInfo, IDialogService dialogService MUser mUser)
         {
-            this._vmNewPassword = vmNewPassword;
-            this._dbManager = dbManager;
-            this._dbName = dbName;
-            this._mUser = mUser;
+            this._userInfo = userInfo;
+            this._dialogService = dialogService;
+			   this._mUser = mUser;
             this.SetBackground = Brushes.RoyalBlue;
             this.setIsEnabled = true;
             OnSearchCommand = new DelegateCommand(ExecuteSearchEmail, CanExecute);
@@ -91,11 +93,11 @@ namespace EngineeringToolsCV_1.ViewModels
            
             this.SetBackground = Brushes.AliceBlue;
             this.SetIsEnabled = false;
-            var dtTable = await this._dbManager.GetUserInfoAsync(this._mUser.Id, this._mUser.Passwort);
-            if (dtTable.Rows.Count > 0)
+            int iCount = await this._userInfo.GetUserInfoAsync(this._mUser.User_Id, this._mUser.Passwort);
+            if (iCount > 0)
             {
-                this._vmNewPassword.StrBenutzname = dtTable.Rows[0][this._dbName.strId].ToString();
-                this._vmNewPassword.StrPassword = dtTable.Rows[0][this._dbName.StrPasswort].ToString();
+                this._vmNewPassword.StrBenutzname = this._mUser.User_Id;
+                this._vmNewPassword.StrPassword = this._mUser.Passwort;
             }
             this.newPassword = new NewPassword();
             this.newPassword.DataContext = this._vmNewPassword;

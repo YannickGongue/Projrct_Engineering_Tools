@@ -1,5 +1,6 @@
 ﻿using EngineeringToolsCV_1.Command;
 using EngineeringToolsCV_1.DatabaseManager;
+using EngineeringToolsCV_1.IRepository;
 using EngineeringToolsCV_1.Models;
 using EngineeringToolsCV_1.Service;
 using EngineeringToolsCV_1.Store;
@@ -18,9 +19,11 @@ namespace EngineeringToolsCV_1.ViewModels
     {
         private INavigationBarService _navigationBarService;
         private IMessageService _messageService;
-        private IUserInfo _userInfo;
-        private IImageService _imageService;
+        private IStudentInfo _userInfo;
+        private IStudentWorkInfo _userWorkInfo;
+		  private IImageService _imageService;
 		  private MStudentInformations _mStudent;
+        private MStudentWorkInfo _mUserWorkInfo;
 
 		  private InformationViewModel VmInfos;
         private BerufViewModel VmBeruf;
@@ -88,16 +91,19 @@ namespace EngineeringToolsCV_1.ViewModels
 		public DashboardViewModel(NavigationStore navigationStore, 
                                 INavigationBarService navigationBarService,
                                 IMessageService messageService,
-                                IUserInfo userInfo,
-                                IImageService imageService,
-                                MStudentInformations mStudent)
+                                IStudentInfo userInfo,
+										  IStudentWorkInfo userWorkInfo,
+										  IImageService imageService,
+                                MStudentInformations mStudent,
+                                MStudentWorkInfo mUserWorkInfo)
         {
             this._navigationBarService = navigationBarService;
             this._messageService = messageService;
             this._userInfo = userInfo;
             this._imageService = imageService;
             this._mStudent = mStudent;
-			   this.executeInfoCommand(navigationStore);
+            this._mUserWorkInfo = mUserWorkInfo;
+            this.executeInfoCommand(navigationStore);
             this.executeBerufCommand(navigationStore);
             this.executeProjektCommand(navigationStore);
             this.executeFormationCommand(navigationStore);
@@ -119,7 +125,12 @@ namespace EngineeringToolsCV_1.ViewModels
             new LayoutNavigationService<ProfilViewModel>(navigationStore,
                () => new ProfilViewModel(navigationStore,
                                          this._navigationBarService,
-                                         this._messageService),
+                                         this._messageService,
+                                         this._imageService,
+                                         this._userInfo,
+                                         this._mStudent,
+                                         this._userWorkInfo,
+                                         this._mUserWorkInfo),
             this._navigationBarService.CreateNavigationBar("Home -> Profil")));
 		  }
 
@@ -131,7 +142,9 @@ namespace EngineeringToolsCV_1.ViewModels
                                               this._imageService,
                                               this._messageService,
                                               this._userInfo,
-                                              this._navigationBarService,
+                                              this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
                                               this._mStudent),
 					this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard -> Information")));
         }
@@ -142,7 +155,15 @@ namespace EngineeringToolsCV_1.ViewModels
 
             BerufCommand = new NavigateCommand<BerufViewModel>(
                new LayoutNavigationService<BerufViewModel>(navigationStore,
-               () => new BerufViewModel(navigationStore,this._mStudent, this._dbManager, this._dbName,this._vmDialogMessage,this._mUserWorkInfo), navigationBar));
+               () => new BerufViewModel(navigationStore,
+                                        this._userWorkInfo,
+                                        this._userInfo,
+                                        this._navigationBarService,
+                                        this._messageService,
+                                        this._imageService,
+                                        this._mStudent,
+                                        this._mUserWorkInfo), 
+               this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard -> Experiences")));
         }
 
         private void executeProjektCommand(NavigationStore navigationStore)

@@ -16,6 +16,7 @@ using System.IO;
 using Microsoft.Win32;
 using EngineeringToolsCV_1.DatabaseManager;
 using System.Data;
+using EngineeringToolsCV_1.IRepository;
 
 namespace EngineeringToolsCV_1.ViewModels
 {
@@ -25,10 +26,11 @@ namespace EngineeringToolsCV_1.ViewModels
         private IImageService _imageService;
         private IMessageService _messageService;
         private INavigationBarService _navigationBarService;
-		  private readonly IUserInfo _userInfo;
+		  private readonly IStudentInfo _userInfo;
+        private IStudentWorkInfo _userWorkInfo;
+        private MStudentWorkInfo _mUserWorkInfo;
 
-		private MStudentInformations _mStudentInfos;
-
+        private MStudentInformations _mStudentInfos;
         private string strTitle;
         private string strName;
         private string strVorname;
@@ -362,10 +364,14 @@ namespace EngineeringToolsCV_1.ViewModels
         public InformationViewModel(NavigationStore navigationStore,
 												IImageService imageService,
 												IMessageService messageService,
-											   IUserInfo userInfo,
-		                              INavigationBarService navigationBarService,
+											   IStudentInfo userInfo,
+												IStudentWorkInfo userWorkInfo,
+												MStudentWorkInfo mUserWorkInfo,
+												INavigationBarService navigationBarService,
 												MStudentInformations mStudentInfos)
         {
+         this._userWorkInfo = userWorkInfo;
+			this._mUserWorkInfo = mUserWorkInfo;
 			this._imageService = imageService;
 			this._messageService = messageService;
          this._navigationBarService = navigationBarService;
@@ -444,8 +450,10 @@ namespace EngineeringToolsCV_1.ViewModels
                                             this._navigationBarService,
                                             this._messageService,
                                             this._userInfo,
+                                            this._userWorkInfo,
                                             this._imageService,
-                                            this._mStudentInfos), 
+                                            this._mStudentInfos,
+                                            this._mUserWorkInfo), 
                this._navigationBarService.CreateNavigationBar("Home->Profil-> Dashboard")));
           
         }

@@ -1,4 +1,5 @@
 ﻿using EngineeringToolsCV_1.DatabaseManager;
+using EngineeringToolsCV_1.IRepository;
 using EngineeringToolsCV_1.Models;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,17 @@ namespace EngineeringToolsCV_1.Service
 {
 	public class AuthenticationService : IAuthenticationService
 	{
-		private readonly DbManager _dbManager;
+		private IUserInfo _userInfo;
 		private MUser _mUser;
-		public AuthenticationService(DbManager dbManager, MUser mUser) {
-			this._dbManager = dbManager;
+		public AuthenticationService(IUserInfo userInfo, MUser mUser) {
+			this._userInfo = userInfo;
 			this._mUser = mUser;
 		}
 
-		public async Task<DataTable> LoginAsync()
+		public async Task<int> LoginAsync()
 		{
-			var dt = await _dbManager.GetUserInfoAsync(this._mUser.Id,this._mUser.Passwort);
-			return dt;
+			int count = await _userInfo.GetUserInfoAsync(this._mUser.User_Id,this._mUser.Passwort);
+			return count;
 		}
 	}
 }

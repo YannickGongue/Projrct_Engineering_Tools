@@ -38,7 +38,7 @@ namespace EngineeringToolsCV_1.Views
         private NavigationBarViewModel _NavigationBar;
         private SQLServerViewModel ServerViewModel;
         private ErrorMessageViewModel _vmDialogMessage;
-        private MUserWorkInfo _mUserWorkInfo;
+        private MStudentWorkInfo _mUserWorkInfo;
 
         SqlConnection con = new SqlConnection();
         SqlCommand com = new SqlCommand();
@@ -51,7 +51,7 @@ namespace EngineeringToolsCV_1.Views
                              DbManager dbManager,
                              DBName dbName,
                              ErrorMessageViewModel vmDialogMessage,
-                             MUserWorkInfo mUserWork )
+                             MStudentWorkInfo mUserWork )
         {
             InitializeComponent();
             this._userRegister = userRegister;

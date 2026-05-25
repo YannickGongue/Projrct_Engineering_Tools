@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace EngineeringToolsCV_1.Repositories
 {
-    public class UserWorkInfo : IUserWorkInfo
+    public class StudentWorkInfo : IStudentWorkInfo
     {
         private DBName _dbName;
         private readonly IConnectionFactory _connectionFactory;
 
-        public UserWorkInfo(IConnectionFactory connectionFactory, DBName dbName)
+        public StudentWorkInfo(IConnectionFactory connectionFactory, DBName dbName)
         {
             this._connectionFactory = connectionFactory;
             this._dbName = dbName;
         }
 
-        public async Task<int> AddWorkInfosAsync(MUserWorkInfo info)
+        public async Task<int> AddWorkInfosAsync(MStudentWorkInfo info)
         {
             string strQueryRegister = string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10}) " +
                                                     "VALUES ( @1, @2, @3, @4, @5, @6, @7, @8, @9, @10)",
@@ -51,7 +51,7 @@ namespace EngineeringToolsCV_1.Repositories
             return await cmd.ExecuteNonQueryAsync();
         }
 
-        public Task<int> UpdateWorkInfosAsync(MUserWorkInfo info)
+        public Task<int> UpdateWorkInfosAsync(MStudentWorkInfo info)
         {
             throw new NotImplementedException();
         }

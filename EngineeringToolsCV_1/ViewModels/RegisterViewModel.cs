@@ -100,7 +100,7 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void regExecut(object obj)
         {                 
-            this.mUser.Id = this.Username;
+            this.mUser.User_Id = this.Username;
             this.mUser.Email = this.EmailAdress;
             this.mUser.Passwort = this.Password;
             this.mUser.ConfirmPasswort = this.ConfirmPassword;     

@@ -1,5 +1,6 @@
 ﻿using EngineeringToolsCV_1.Command;
 using EngineeringToolsCV_1.DatabaseManager;
+using EngineeringToolsCV_1.IRepository;
 using EngineeringToolsCV_1.Models;
 using EngineeringToolsCV_1.Repositories;
 using EngineeringToolsCV_1.Service;
@@ -16,12 +17,12 @@ namespace EngineeringToolsCV_1.ViewModels
     {
       private INavigationBarService _navigationBarService;
       private IMessageService _messageService;
-      private I
+      private IStudentWorkInfo _userWorkInfo;
+		private IStudentInfo _userInfo;
+      private IImageService _imageService;
 		private NavigationStore navigationStore;
-        private NavigationBarViewModel navigationBar;
         private MStudentInformations _mStudentInfos;
-        private MUserWorkInfo _mUserWorkInfo;
-         private IMessageService _messageService;
+        private MStudentWorkInfo _mUserWorkInfo;
           
 
         private string strTitel;
@@ -197,23 +198,37 @@ namespace EngineeringToolsCV_1.ViewModels
 
 
         public BerufViewModel(NavigationStore navigationStore, 
-                              MStudentInformations mStudentInfos,
-                              DbManager dbManager,
-                              DBName dbName,
-                              ErrorMessageViewModel vmDialogMessage,
-                              MUserWorkInfo mUserWorkInfo)
+                              IStudentWorkInfo userWorkInfo,
+										IStudentInfo userInfo,
+										INavigationBarService navigationBarService,
+										IMessageService messageService,
+										IImageService imageService,
+										MStudentInformations mStudentInfos,
+                              MStudentWorkInfo mUserWorkInfo)
         {
             this.navigationStore = navigationStore;
-            this._mStudentInfos = mStudentInfos;
+            this._userWorkInfo = userWorkInfo;
+			   this._userInfo = userInfo;
+			   this._navigationBarService = navigationBarService;
+			   this._messageService = messageService;
+            this._imageService = imageService;
+			   this._mStudentInfos = mStudentInfos;
             this._mUserWorkInfo = mUserWorkInfo;
             this.StrStartDate = new DateTime();
             this.StrEndDate = new DateTime();
 
 
-           this.navigationBar = new NavigationBarViewModel("Home -> Dashboard");
            this.NavigateReturnCommand = new NavigateCommand<DashboardViewModel>(
                new LayoutNavigationService<DashboardViewModel>(navigationStore,
-               () => new DashboardViewModel(navigationStore, this._mStudentInfos, this._dbManager,this._dbName,this._vmDialogMessage, this._mUserWorkInfo), navigationBar));
+               () => new DashboardViewModel(navigationStore,
+                                            this._navigationBarService,
+                                            this._messageService, 
+                                            this._userInfo,
+                                            this._userWorkInfo,
+														  this._imageService,
+                                            this._mStudentInfos,
+                                            this._mUserWorkInfo),
+               this._navigationBarService.CreateNavigationBar("Home -> Dashboard")));
 
            this.SaveCommand = new DelegateCommand(ExecuteSaveMethod, CanExecute);
            this.deleteCommand = new DelegateCommand(ExecuteDeleteMethod, CanExecute);
@@ -281,20 +296,16 @@ namespace EngineeringToolsCV_1.ViewModels
                 this._mUserWorkInfo.Skills = this.StrSkills;
                 this._mUserWorkInfo.ArbeitsArt = this.StrBeschäftigung;
 
-                    iCount = await this._dbManager.AddWorkInfosAsync(this._mUserWorkInfo);
+                    iCount = await this._userWorkInfo.AddWorkInfosAsync(this._mUserWorkInfo);
                     if (iCount == 1)
                     {
-                        this._vmDialogMessage.SetErrorMessage= "die Einträgen wurden erfolgreich in die Datenbank hinzugefügt";
-                        this.dialogMessage.DataContext = this._vmDialogMessage;
-                        this.dialogMessage.Show();
+                        this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich in die Datenbank hinzugefügt");                
                     }
-                //}
+                
             }
             catch (Exception ex)
             {
-                this._vmDialogMessage.SetErrorMessage = ex.Message.ToString();
-                this.dialogMessage.DataContext = this._vmDialogMessage;
-                this.dialogMessage.Show();
+            this._messageService.ShowErrorMessage(ex.Message);        
             }
         }
     }
