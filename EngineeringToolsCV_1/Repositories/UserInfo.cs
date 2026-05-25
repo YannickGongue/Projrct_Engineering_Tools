@@ -40,7 +40,7 @@ namespace EngineeringToolsCV_1.Repositories
 			return await cmd.ExecuteNonQueryAsync();
 		}
 
-		public async Task<int> GetUserInfoAsync(string id, string password)
+		public async Task<DataTable> GetUserInfoAsync(string id, string password)
 		{
 			string strQueryLogin = String.Format("SELECT * FROM {0} WHERE {1}= @1 AND {2}= @2",
 															this._dbName.StrTBL_User,
@@ -63,7 +63,7 @@ namespace EngineeringToolsCV_1.Repositories
 			using var adapter = new SqlDataAdapter(cmd);
 			adapter.Fill(dt);
 
-			return dt.Rows.Count;
+			return dt;
 		}
 
 		public async Task<int> UpdateUserInfosAsync(MUser info)

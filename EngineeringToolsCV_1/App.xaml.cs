@@ -63,11 +63,9 @@ namespace EngineeringToolsCV_1
 			string strConnectionString = ConfigurationManager
 												  .ConnectionStrings["ConnectionString"]
 												  .ConnectionString;
-         services.AddSingleton(new SqlConnectionFactory(strConnectionString));
-			
-           services.AddSingleton<DBName>();
-           services.AddSingleton<StudentInfos>();
-         services.AddSingleton<StudentWorkInfo>();
+services.AddSingleton<IConnectionFactory>(
+    new SqlConnectionFactory(strConnectionString));			
+         services.AddSingleton<DBName>();
 			services.AddSingleton<DbManager>();
 
 			services.AddSingleton<NavigationStore>();
@@ -79,36 +77,46 @@ namespace EngineeringToolsCV_1
 			services.AddTransient<MStudentWorkInfo>();
 
 			services.AddSingleton<MainWindow>();
-
+			services.AddTransient<HomeViewModel>();
+			services.AddTransient<mainViewModel>();
 			services.AddTransient<LoginViewModel>();
 			services.AddTransient<RegisterViewModel>();
 			services.AddTransient<UserResetViewModel>();
-         services.AddTransient<NewPassordViewModel>();
-			
-			services.AddTransient<HomeViewModel>();
+         services.AddTransient<NewPassordViewModel>();		
+
+			services.AddTransient<IAuthenticationService,AuthenticationService>();
+			services.AddTransient<IUserInfo, UserInfo>();
+			services.AddTransient<IStudentInfo, StudentInfos>();
+			services.AddTransient<IStudentWorkInfo,StudentWorkInfo>();
+			services.AddTransient<IDialogService, DialogService>();
+			services.AddTransient<IImageService, ImageService>();
+			services.AddTransient<IFileDialogService,FileDialogService>();
+			services.AddTransient<IMessageService, MessageService>();
+			services.AddTransient<INavigationBarService, NavigationBarService>();
 
 
 
-         //this._vmDialogMessage = new ErrorMessageViewModel();
-         //this.dbName = new DBName();
-         //this.sqlcon = new SqlConnectionFactory(strConnectionString);
-         //this._userInfo = new UserInfos(this.sqlcon, this.dbName);
-         //this._userWorkInfo = new UserWorkInfo(this.sqlcon, this.dbName);
-         //this.dbManager = new DbManager(this._userInfo, this._userWorkInfo);
-         //this.mUser = new MUser();
-         //this._mUserWorkInfo = new MUserWorkInfo();
-         //this._vmNewPassword = new NewPassordViewModel();
-         //this.VmLogin = new LoginViewModel(this.navigationStore, this.mUser, this._vmUserReset, this._mStudent, this.dbManager, this.dbName, this._vmDialogMessage, this._mUserWorkInfo);
-         //this._mStudent = new MStudentInformations();
-         //this._vmRegister = new RegisterViewModel(this.VmLogin, this.mUser, this.dbManager, this.dbName, this._vmDialogMessage);
-         //this._vmUserReset = new UserResetViewModel(this._vmNewPassword, this.dbManager, this.dbName, this.mUser);
-         //this.navigationStore = new NavigationStore();
-         //this.mainWindow = new MainWindow();
-         //this._NavigationBar = new NavigationBarViewModel("Home");
-         //   this.ServerView = new SQLServerView(this._vmRegister,this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo);
-        }
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+			//this._vmDialogMessage = new ErrorMessageViewModel();
+			//this.dbName = new DBName();
+			//this.sqlcon = new SqlConnectionFactory(strConnectionString);
+			//this._userInfo = new UserInfos(this.sqlcon, this.dbName);
+			//this._userWorkInfo = new UserWorkInfo(this.sqlcon, this.dbName);
+			//this.dbManager = new DbManager(this._userInfo, this._userWorkInfo);
+			//this.mUser = new MUser();
+			//this._mUserWorkInfo = new MUserWorkInfo();
+			//this._vmNewPassword = new NewPassordViewModel();
+			//this.VmLogin = new LoginViewModel(this.navigationStore, this.mUser, this._vmUserReset, this._mStudent, this.dbManager, this.dbName, this._vmDialogMessage, this._mUserWorkInfo);
+			//this._mStudent = new MStudentInformations();
+			//this._vmRegister = new RegisterViewModel(this.VmLogin, this.mUser, this.dbManager, this.dbName, this._vmDialogMessage);
+			//this._vmUserReset = new UserResetViewModel(this._vmNewPassword, this.dbManager, this.dbName, this.mUser);
+			//this.navigationStore = new NavigationStore();
+			//this.mainWindow = new MainWindow();
+			//this._NavigationBar = new NavigationBarViewModel("Home");
+			//   this.ServerView = new SQLServerView(this._vmRegister,this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo);
+		}
+
+		private void Application_Startup(object sender, StartupEventArgs e)
         {  
             
             if(Environment.MachineName.Equals("DESKTOP-5FKC835"))
@@ -128,13 +136,32 @@ namespace EngineeringToolsCV_1
             }
         }
 
-        private void CreateHomeView()
-        {
-            INavigateService<HomeViewModel> homeNavigationService = new LayoutNavigationService<HomeViewModel>(this.navigationStore,
-                        () => new HomeViewModel(this.navigationStore, this._vmRegister, this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo), this._NavigationBar);
-            homeNavigationService.Navigate();
-            this.mainWindow.DataContext = new mainViewModel(this.navigationStore, this._vmRegister,this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo);
-            this.mainWindow.Show();
-        }        
-    }
+		//private void CreateHomeView()
+		//{
+		//    INavigateService<HomeViewModel> homeNavigationService = new LayoutNavigationService<HomeViewModel>(this.navigationStore,
+		//                () => new HomeViewModel(this.navigationStore, this._vmRegister, this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo), this._NavigationBar);
+		//    homeNavigationService.Navigate();
+		//    this.mainWindow.DataContext = new mainViewModel(this.navigationStore, this._vmRegister,this._vmUserReset,this._mStudent,this.mUser,this.dbManager,this.dbName,this._vmDialogMessage,this._mUserWorkInfo);
+		//    this.mainWindow.Show();
+		//}        
+
+		private void CreateHomeView()
+		{
+			var navigationStore =
+				 _serviceProvider.GetRequiredService<NavigationStore>();
+
+			var mainWindow =
+				 _serviceProvider.GetRequiredService<MainWindow>();
+
+			var homeViewModel =
+				 _serviceProvider.GetRequiredService<HomeViewModel>();
+
+			navigationStore.CurrentViewModels = homeViewModel;
+
+			mainWindow.DataContext =
+				 _serviceProvider.GetRequiredService<mainViewModel>();
+
+			mainWindow.Show();
+		}
+	}
 }

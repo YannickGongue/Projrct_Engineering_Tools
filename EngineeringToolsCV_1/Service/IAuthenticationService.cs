@@ -8,6 +8,6 @@ namespace EngineeringToolsCV_1.Service
 {
 	public interface IAuthenticationService
 	{
-		Task<int> LoginAsync();
+		Task<DataTable> LoginAsync();
 	}
 }

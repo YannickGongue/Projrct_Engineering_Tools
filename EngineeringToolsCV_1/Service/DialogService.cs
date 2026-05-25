@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EngineeringToolsCV_1.Service
 {
-	public class DialogService 
+	public class DialogService : IDialogService
 	{
 		private DBName _dbName;
 		private RegisterView register;

@@ -16,10 +16,10 @@ namespace EngineeringToolsCV_1.ViewModels
     public class UserResetViewModel : ViewModelBase
     {
         private IUserInfo _userInfo;
-        private IDialogService _dialogService;
+        //private IDialogService _dialogService;
 		  private NewPassordViewModel _vmNewPassword;
         private MUser _mUser;
-        
+        private DataTable dt;
         private NewPassword newPassword;
         private string setEmail;
         private bool setIsEnabled;
@@ -67,10 +67,10 @@ namespace EngineeringToolsCV_1.ViewModels
         public ICommand OnSearchCommand { get; set; }
         public ICommand OnResetCommand { get; set; }  
 
-		public UserResetViewModel(IUserInfo userInfo, IDialogService dialogService MUser mUser)
+		  public UserResetViewModel(IUserInfo userInfo, MUser mUser)
         {
             this._userInfo = userInfo;
-            this._dialogService = dialogService;
+            //this._dialogService = dialogService;
 			   this._mUser = mUser;
             this.SetBackground = Brushes.RoyalBlue;
             this.setIsEnabled = true;
@@ -90,11 +90,11 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteSearchEmail(object obj)
         {
-           
-            this.SetBackground = Brushes.AliceBlue;
+            this.dt = new DataTable();
+			   this.SetBackground = Brushes.AliceBlue;
             this.SetIsEnabled = false;
-            int iCount = await this._userInfo.GetUserInfoAsync(this._mUser.User_Id, this._mUser.Passwort);
-            if (iCount > 0)
+             dt =   await this._userInfo.GetUserInfoAsync(this._mUser.User_Id, this._mUser.Passwort);
+            if (dt.Rows.Count > 0)
             {
                 this._vmNewPassword.StrBenutzname = this._mUser.User_Id;
                 this._vmNewPassword.StrPassword = this._mUser.Passwort;

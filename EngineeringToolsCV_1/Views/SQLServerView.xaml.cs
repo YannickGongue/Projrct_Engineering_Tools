@@ -96,7 +96,7 @@ namespace EngineeringToolsCV_1.Views
                 setting.saveConnectionString("ConnectionString" ,connectionString);
                 MessageBox.Show("your Connection string has been succefully saved.", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
-                this.CreateHomeView();
+                //this.CreateHomeView();
             }
             catch (Exception ex)
             {
@@ -186,14 +186,14 @@ namespace EngineeringToolsCV_1.Views
         //    oConfiguration.Save(ConfigurationSaveMode.Modified);
         //}
 
-        private void CreateHomeView()
-        {
-            INavigateService<HomeViewModel> homeNavigationService = new LayoutNavigationService<HomeViewModel>(navigationStore,
-                        () => new HomeViewModel(navigationStore,this._userRegister,this._vmUserReset,this._mStudent, this._mUser,this._dbManager,this._dbName,this._vmDialogMessage,this._mUserWorkInfo), _NavigationBar);
-            homeNavigationService.Navigate();
-            mainWindow.DataContext = new mainViewModel(navigationStore, this._userRegister,this._vmUserReset,this._mStudent,this._mUser,this._dbManager,this._dbName,this._vmDialogMessage,this._mUserWorkInfo);
-            mainWindow.Show();
-        }
+        //private void CreateHomeView()
+        //{
+        //    INavigateService<HomeViewModel> homeNavigationService = new LayoutNavigationService<HomeViewModel>(navigationStore,
+        //                () => new HomeViewModel(navigationStore,this._userRegister,this._vmUserReset,this._mStudent, this._mUser,this._dbManager,this._dbName,this._vmDialogMessage,this._mUserWorkInfo), _NavigationBar);
+        //    homeNavigationService.Navigate();
+        //    mainWindow.DataContext = new mainViewModel(navigationStore, this._userRegister,this._vmUserReset,this._mStudent,this._mUser,this._dbManager,this._dbName,this._vmDialogMessage,this._mUserWorkInfo);
+        //    mainWindow.Show();
+        //}
 
         //public ObservableCollection<string> ListOfServername()
         //{

@@ -20,7 +20,12 @@ namespace EngineeringToolsCV_1.ViewModels
         private INavigationBarService _navigatinBarService;
         private IDialogService _dialogService;
         private IMessageService _messageService;
-		private string password;
+        private IImageService _imageService;
+        private IStudentInfo _StudentInfo;
+        private IStudentWorkInfo _StudentWorkInfo;
+		  private MStudentWorkInfo _mStudentWorkInfo;
+        private MStudentInformations _mStudentInformations;
+		  private string password;
         private string username;
        
         private bool setActivedWindow;
@@ -90,14 +95,24 @@ namespace EngineeringToolsCV_1.ViewModels
                               IDialogService dialogService,
 										IAuthenticationService authenticationService,
 										INavigationBarService navigationBarService,
-                              IMessageService messageService)
+                              IMessageService messageService,
+                              IImageService imageService,
+                              IStudentInfo studentInfo,
+                              IStudentWorkInfo studentWorkInfo,
+                              MStudentInformations mStudentInformations,
+                              MStudentWorkInfo mStudentWorkInfo)
         {
             this._authenticationService = authenticationService;
 			   this._navigatinBarService = navigationBarService;
 			   this._dialogService = dialogService;
 			   this._messageService = messageService;
-            
-            this.Username = "gonguego";
+			   this._imageService = imageService;
+            this._StudentInfo = studentInfo;
+			   this._StudentWorkInfo = studentWorkInfo;
+			   this._mStudentInformations = mStudentInformations;
+			   this._mStudentWorkInfo = mStudentWorkInfo;
+
+			   this.Username = "gonguego";
             this.Password = "dyna1605";
 
             this.SetActivedWindow = true;
@@ -105,7 +120,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             this.NavigateLoginCommand = new NavigateLoginCommand(
                                         new LayoutNavigationService<ProfilViewModel>(navigateStore,
-                                        () => new ProfilViewModel(navigateStore,this._navigatinBarService, this._messageService), 
+                                        () => new ProfilViewModel(navigateStore,
+                                                                  this._navigatinBarService, 
+                                                                  this._messageService,
+                                                                  this._imageService,
+                                                                  this._StudentInfo,
+                                                                  this._mStudentInformations,
+                                                                  this._StudentWorkInfo,
+                                                                  this._mStudentWorkInfo), 
                                         this._navigatinBarService.CreateNavigationBar("Home -> Profil")),
                                         this._messageService, this._authenticationService);
 
@@ -115,9 +137,9 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteUserReset(object obj)
         {       
-         var dt = await this._authenticationService.LoginAsync();
-         this._dialogService.ShowResetPassword(dt);
-            this.UserResetEnabled = false;
+          var dt = await this._authenticationService.LoginAsync();
+          this._dialogService.ShowResetPassword(dt);
+          this.UserResetEnabled = false;
                      
         }
 

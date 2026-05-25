@@ -8,6 +8,7 @@ using EngineeringToolsCV_1.ViewModels;
 using EngineeringToolsCV_1.Views;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Windows;
 
@@ -16,6 +17,7 @@ namespace EngineeringToolsCV_1.Command
     public class NavigateLoginCommand : ViewModelCommand
     {
         private int iCount;
+        private DataTable dt;
         private IMessageService _messageService;
         private IAuthenticationService _authenticationService;
         private LoginViewModel _ViewModel;
@@ -35,10 +37,10 @@ namespace EngineeringToolsCV_1.Command
 
          try
          {
+            this.dt = new DataTable();
+				this.dt = await this._authenticationService.LoginAsync();
 
-            iCount = await this._authenticationService.LoginAsync();
-
-            if (iCount > 0)
+            if (this.dt.Rows.Count > 0)
             {
                this._navigateService.Navigate();
             }

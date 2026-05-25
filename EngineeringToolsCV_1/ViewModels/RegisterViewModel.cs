@@ -9,6 +9,7 @@ using EngineeringToolsCV_1.Models;
 using EngineeringToolsCV_1.Repositories;
 using EngineeringToolsCV_1.DatabaseManager;
 using EngineeringToolsCV_1.Views;
+using EngineeringToolsCV_1.Service;
 
 namespace EngineeringToolsCV_1.ViewModels
 {
@@ -20,13 +21,10 @@ namespace EngineeringToolsCV_1.ViewModels
         private string confirmPassword;
         private string emailAdresse;
         private LoginViewModel VmLogin;
-        private DbManager _DbManager;
         private MUser mUser;
-        private DBName _dbname;
-        private ErrorMessageViewModel dialogMessage;
-        private MessageDialog _DialogView;
-
-        public string Username
+        private IMessageService _messageService;
+        private IUserInfo _userInfo;
+		  public string Username
         {
             get
             {
@@ -85,14 +83,15 @@ namespace EngineeringToolsCV_1.ViewModels
         public ICommand regCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public RegisterViewModel(LoginViewModel _vmLogin, MUser _mUser, DbManager dbManager, DBName dbname, ErrorMessageViewModel dialogMessage)
+        public RegisterViewModel(LoginViewModel _vmLogin, 
+                                 MUser _mUser, 
+                                 IUserInfo userInfo,
+                                 IMessageService messageService)
         {
-            this.mUser = _mUser;
-            this._DbManager = dbManager;
-            this._dbname = dbname;
+            this._userInfo = userInfo;
+            this._messageService = messageService;
+			   this.mUser = _mUser;
             this.VmLogin = _vmLogin;
-            this.dialogMessage = dialogMessage;
-            this._DialogView = new MessageDialog();
             this.regCommand = new DelegateCommand( regExecut, CanExecute);
             this.CancelCommand = new DelegateCommand(CancelExecut, CanExecute);
 
@@ -109,18 +108,14 @@ namespace EngineeringToolsCV_1.ViewModels
             if (mUser.Passwort == mUser.ConfirmPasswort)
             {
                 //sind die Datensätze eingefügt?
-                if (await this._DbManager.AddUserInfo(this.mUser) == 1)
+                if (await this._userInfo.AddUserInfoAsync(this.mUser) == 1)
                 {
-                    this.dialogMessage.SetErrorMessage = "die Einträgen wurden erfolgreich in die Datenbank hinzugefügt";
-                    this._DialogView.DataContext = this.dialogMessage;
-                    this._DialogView.Show();
+                    this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich in die Datenbank hinzugefügt");
                 }
             }
             else
             {
-                this.dialogMessage.SetErrorMessage= "Die Passwort stimmen nicht überein";
-                this._DialogView.DataContext = this.dialogMessage;
-                this._DialogView.Show();
+                this._messageService.ShowErrorMessage("Die Passwort stimmen nicht überein");
             }
         }
 

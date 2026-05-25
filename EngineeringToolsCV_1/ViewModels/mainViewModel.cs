@@ -1,39 +1,42 @@
-﻿using System;
+﻿using EngineeringToolsCV_1.Command;
+using EngineeringToolsCV_1.DatabaseManager;
+using EngineeringToolsCV_1.IRepository;
+using EngineeringToolsCV_1.Language;
+using EngineeringToolsCV_1.Models;
+using EngineeringToolsCV_1.Service;
+using EngineeringToolsCV_1.Store;
+using EngineeringToolsCV_1.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
-using EngineeringToolsCV_1.Command;
-using EngineeringToolsCV_1.Language;
-using EngineeringToolsCV_1.Models;
-using EngineeringToolsCV_1.Store;
-using EngineeringToolsCV_1.Views;
-using EngineeringToolsCV_1.DatabaseManager;
 
 namespace EngineeringToolsCV_1.ViewModels
 {
     public class mainViewModel : ViewModelBase
     {
         private bool setEnable;
-        private ErrorMessageViewModel _vmDialogMessage;
-        private UserResetView _userResetView;
-        private RegisterViewModel _userRegister;
-        private UserResetViewModel _vmUserReset;
         private NavigationStore _navigationstore;
         private NavigationBarViewModel _NavigationBar;
         private HomeViewModel homeViewModel;
         private ObservableCollection<Culture> cultureList;
         private Culture selectedCulture;
-        private MStudentInformations _mStudent;
         private MUser _mUser;
-        private DbManager _dbManager;
-        private DBName _dbName;
-        private MStudentWorkInfo _mUserWorkInfo;
+	     private INavigationBarService _navigationBarService;
+	     private IDialogService _dialogService;
+	     private IMessageService _messageService;
+	     private IAuthenticationService _authenticationService;
+	     private IStudentInfo _StudentInfo;
+	     private IStudentWorkInfo _StudentWorkInfo;
+	     private MStudentWorkInfo _mStudentWorkInfo;
+	     private MStudentInformations _mStudentInformations;
+	     private IImageService _imageService;
 
 
-        //add a SelectedCulture property
-        public Culture SelectedCulture
+		//add a SelectedCulture property
+		public Culture SelectedCulture
         {
             get
             {
@@ -76,25 +79,27 @@ namespace EngineeringToolsCV_1.ViewModels
         public ICommand HomeNavigationCommand { get; set; }
         public ViewModelBase CurrentViewModels => _navigationstore.CurrentViewModels;
 
-        public mainViewModel(NavigationStore navigationStore, 
-                             RegisterViewModel userRegister,
-                             UserResetViewModel vmUserReset, 
-                             MStudentInformations mStudent, 
+        public mainViewModel(NavigationStore navigationStore,
+									  IImageService imageService,
+									  IAuthenticationService authenticationService,
+									  INavigationBarService navigationBarService,
+									  IDialogService dialogService,
+									  IMessageService messageService,
+									  IStudentInfo studentInfo,
+									  MStudentInformations mStudent, 
                              MUser mUser,
-                             DbManager dbManager,
-                             DBName dbName,
-                             ErrorMessageViewModel vmDialogMessage,
-                             MStudentWorkInfo mUserWorkInfo)
+                             MStudentWorkInfo mStudentWorkInfo)
         {
             this._navigationstore = navigationStore;
-            this._userRegister = userRegister;
-            this._vmUserReset = vmUserReset;
-            this._mStudent = mStudent;
+            this._messageService = messageService;
+			   this._dialogService = dialogService;
+			   this._navigationBarService = navigationBarService;
+			   this._authenticationService = authenticationService;
+			   this._imageService = imageService;
+			   this._StudentInfo = studentInfo;
+			   this._mStudentInformations = mStudent;
             this._mUser = mUser;
-            this._dbManager = dbManager;
-            this._dbName = dbName;
-            this._vmDialogMessage = vmDialogMessage;
-            this._mUserWorkInfo = mUserWorkInfo;
+            this._mStudentWorkInfo = mStudentWorkInfo;
 
             this.executeCommand(navigationStore);
 
@@ -112,9 +117,7 @@ namespace EngineeringToolsCV_1.ViewModels
         }
     
         private void executeCommand(NavigationStore navigationStore)
-        {
-            _NavigationBar = new NavigationBarViewModel("Home");
-          
+        {          
             if(navigationStore.CurrentViewModels.Equals(homeViewModel))
             {
                 this.SetEnable = false;
@@ -124,7 +127,17 @@ namespace EngineeringToolsCV_1.ViewModels
                 this.SetEnable = true;
                 HomeNavigationCommand = new NavigateCommand<HomeViewModel>(
                                         new LayoutNavigationService<HomeViewModel>(navigationStore,
-                                        () => new HomeViewModel(navigationStore, this._userRegister,this._vmUserReset,this._mStudent, this._mUser,this._dbManager,this._dbName,this._vmDialogMessage,this._mUserWorkInfo), _NavigationBar));
+                                        () => new HomeViewModel(navigationStore,
+                                                                this._authenticationService,
+							   													 this._dialogService,
+																					 this._messageService,
+																					 this._navigationBarService,
+																					 this._StudentInfo,
+                                                                this._StudentWorkInfo,
+																					 this._mStudentInformations,                                                          
+                                                                this._mStudentWorkInfo,
+                                                                this._imageService),
+                                        this._navigationBarService.CreateNavigationBar("Home")));
             }
            
         }

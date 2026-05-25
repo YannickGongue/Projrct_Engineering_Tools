@@ -18,10 +18,10 @@ namespace EngineeringToolsCV_1.Service
 			this._mUser = mUser;
 		}
 
-		public async Task<int> LoginAsync()
+		public async Task<DataTable> LoginAsync()
 		{
-			int count = await _userInfo.GetUserInfoAsync(this._mUser.User_Id,this._mUser.Passwort);
-			return count;
+			var dt = await _userInfo.GetUserInfoAsync(this._mUser.User_Id,this._mUser.Passwort);
+			return dt;
 		}
 	}
 }
