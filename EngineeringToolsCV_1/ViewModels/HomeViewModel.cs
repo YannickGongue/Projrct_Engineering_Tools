@@ -15,14 +15,14 @@ namespace EngineeringToolsCV_1.ViewModels
     public class HomeViewModel : ViewModelBase
     {
         private INavigationBarService _navigationBarService;
-        private IDialogService _dialogService;
 		  private IMessageService _messageService;
-        private IAuthenticationService _authenticationService;
 		  private IStudentInfo _StudentInfo;
 		  private IStudentWorkInfo _StudentWorkInfo;
 		  private MStudentWorkInfo _mStudentWorkInfo;
 		  private MStudentInformations _mStudentInformations;
+        private MUser _mUser;
         private IImageService _imageService;
+        private IUserInfo _userInfo;
 
 
 
@@ -41,19 +41,16 @@ namespace EngineeringToolsCV_1.ViewModels
         }
 
         public HomeViewModel(NavigationStore navigationStore,
-                             IAuthenticationService authenticationService,
-                             IDialogService dialogService,
                              IMessageService messageService,
                              INavigationBarService navigationBarService,
                              IStudentInfo studentInfo,
                              IStudentWorkInfo studentWorkInfo,
                              MStudentInformations mStudentInformations,
                              MStudentWorkInfo mStudentWorkInfo,
-                             IImageService imageService)
+                             IImageService imageService,
+                             IUserInfo userInfo,
+                             MUser mUser)
         {
-            
-           this._authenticationService = authenticationService;
-			  this._dialogService = dialogService;
 			  this._messageService = messageService;
 			  this._navigationBarService = navigationBarService;
 			  this._StudentInfo = studentInfo;
@@ -61,17 +58,19 @@ namespace EngineeringToolsCV_1.ViewModels
 			  this._mStudentInformations = mStudentInformations;
 			  this._mStudentWorkInfo = mStudentWorkInfo;
 			  this._imageService = imageService;
+			  this._userInfo = userInfo;
+			  this._mUser = mUser;
 
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(
                 new LayoutNavigationService<LoginViewModel>(navigationStore,
                 () => new LoginViewModel(navigationStore,
-                                         this._dialogService,
-                                         this._authenticationService,
                                          this._navigationBarService,
                                          this._messageService,
                                          this._imageService,
                                          this._StudentInfo,
                                          this._StudentWorkInfo,
+                                         this._userInfo,
+                                         this._mUser,
                                          this._mStudentInformations,
                                          this._mStudentWorkInfo),
                 this._navigationBarService.CreateNavigationBar("Home")));

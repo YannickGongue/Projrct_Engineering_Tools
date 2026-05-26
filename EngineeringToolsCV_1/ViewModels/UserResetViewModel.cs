@@ -16,7 +16,6 @@ namespace EngineeringToolsCV_1.ViewModels
     public class UserResetViewModel : ViewModelBase
     {
         private IUserInfo _userInfo;
-        //private IDialogService _dialogService;
 		  private NewPassordViewModel _vmNewPassword;
         private MUser _mUser;
         private DataTable dt;
@@ -70,7 +69,6 @@ namespace EngineeringToolsCV_1.ViewModels
 		  public UserResetViewModel(IUserInfo userInfo, MUser mUser)
         {
             this._userInfo = userInfo;
-            //this._dialogService = dialogService;
 			   this._mUser = mUser;
             this.SetBackground = Brushes.RoyalBlue;
             this.setIsEnabled = true;

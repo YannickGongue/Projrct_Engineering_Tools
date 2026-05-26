@@ -1,5 +1,6 @@
 ﻿
 using EngineeringToolsCV_1.DatabaseManager;
+using EngineeringToolsCV_1.IRepository;
 using EngineeringToolsCV_1.Models;
 using EngineeringToolsCV_1.Repositories;
 using EngineeringToolsCV_1.Service;
@@ -16,20 +17,22 @@ namespace EngineeringToolsCV_1.Command
 {
     public class NavigateLoginCommand : ViewModelCommand
     {
-        private int iCount;
-        private DataTable dt;
-        private IMessageService _messageService;
-        private IAuthenticationService _authenticationService;
-        private LoginViewModel _ViewModel;
-        private INavigateService<ProfilViewModel> _navigateService;
+      private DataTable dt;
+      private IMessageService _messageService;
+      private LoginViewModel _ViewModel;
+      private INavigateService<ProfilViewModel> _navigateService;
+      private IUserInfo _userInfo;
+      private LoginViewModel _vmLogin;
 
-        public NavigateLoginCommand(INavigateService<ProfilViewModel> navigateService,
+		public NavigateLoginCommand(INavigateService<ProfilViewModel> navigateService,
                                     IMessageService messageService,
-                                    IAuthenticationService authenticationService)
+                                    IUserInfo userInfo,
+                                    LoginViewModel vmLogin)
         {
             this._navigateService = navigateService;
             this._messageService = messageService;
-            this._authenticationService = authenticationService;
+            this._userInfo = userInfo;
+            this._vmLogin = vmLogin;
 		}
 
        public async override void Execute(object parameter)
@@ -38,7 +41,7 @@ namespace EngineeringToolsCV_1.Command
          try
          {
             this.dt = new DataTable();
-				this.dt = await this._authenticationService.LoginAsync();
+				this.dt = await this._userInfo.GetUserInfoAsync(this._vmLogin.Username, this._vmLogin.Password);
 
             if (this.dt.Rows.Count > 0)
             {

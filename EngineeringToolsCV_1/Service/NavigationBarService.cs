@@ -9,10 +9,7 @@ namespace EngineeringToolsCV_1.Service
 	{
 		private NavigationBarViewModel _instance;
 		private string _statusBarText;
-		public NavigationBarService(string statusBarText)
-		{
-			_statusBarText = statusBarText;
-		}
+		
 		public NavigationBarViewModel CreateNavigationBar(string statusBarText)
 		{
 			_instance = new NavigationBarViewModel(statusBarText);

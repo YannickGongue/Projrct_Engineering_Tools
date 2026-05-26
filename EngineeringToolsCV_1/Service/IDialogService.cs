@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Windows;
 
 namespace EngineeringToolsCV_1.Service
 {
 	public interface IDialogService
 	{
-		void ShowRegister();
-		void ShowResetPassword(DataTable dt);
+		void Show(Window window);
 	}
 }

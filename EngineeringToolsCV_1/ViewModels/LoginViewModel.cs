@@ -16,15 +16,21 @@ namespace EngineeringToolsCV_1.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     { 
-        private IAuthenticationService _authenticationService;
         private INavigationBarService _navigatinBarService;
-        private IDialogService _dialogService;
         private IMessageService _messageService;
         private IImageService _imageService;
         private IStudentInfo _StudentInfo;
         private IStudentWorkInfo _StudentWorkInfo;
+		  private IUserInfo _userInfo;
+        private MUser _mUser;
+
 		  private MStudentWorkInfo _mStudentWorkInfo;
         private MStudentInformations _mStudentInformations;
+		  private RegisterView register;
+		  private UserResetView _UserResetView;
+		  private RegisterViewModel _vmRegister;
+		  private UserResetViewModel _vmUserReset;
+        private DBName _dbName;
 		  private string password;
         private string username;
        
@@ -92,25 +98,25 @@ namespace EngineeringToolsCV_1.ViewModels
         }
 
         public LoginViewModel(NavigationStore navigateStore,
-                              IDialogService dialogService,
-										IAuthenticationService authenticationService,
 										INavigationBarService navigationBarService,
                               IMessageService messageService,
                               IImageService imageService,
                               IStudentInfo studentInfo,
                               IStudentWorkInfo studentWorkInfo,
-                              MStudentInformations mStudentInformations,
+                              IUserInfo userInfo,
+                              MUser mUser,
+										MStudentInformations mStudentInformations,
                               MStudentWorkInfo mStudentWorkInfo)
         {
-            this._authenticationService = authenticationService;
 			   this._navigatinBarService = navigationBarService;
-			   this._dialogService = dialogService;
 			   this._messageService = messageService;
 			   this._imageService = imageService;
             this._StudentInfo = studentInfo;
 			   this._StudentWorkInfo = studentWorkInfo;
 			   this._mStudentInformations = mStudentInformations;
 			   this._mStudentWorkInfo = mStudentWorkInfo;
+			   this._userInfo = userInfo;
+			   this._mUser = mUser;
 
 			   this.Username = "gonguego";
             this.Password = "dyna1605";
@@ -129,7 +135,9 @@ namespace EngineeringToolsCV_1.ViewModels
                                                                   this._StudentWorkInfo,
                                                                   this._mStudentWorkInfo), 
                                         this._navigatinBarService.CreateNavigationBar("Home -> Profil")),
-                                        this._messageService, this._authenticationService);
+                                        this._messageService,
+                                        this._userInfo,
+                                        this);
 
             this.RegisterCommand = new DelegateCommand(ExecuteRegister, CanExecute);
             this.UserResetCommand = new DelegateCommand(ExecuteUserReset, CanExecute);
@@ -137,9 +145,15 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteUserReset(object obj)
         {       
-          var dt = await this._authenticationService.LoginAsync();
-          this._dialogService.ShowResetPassword(dt);
-          this.UserResetEnabled = false;
+          var dt = await this._userInfo.GetUserInfoAsync(Username, Password);
+          this._dbName = new DBName();
+			 this._UserResetView = new UserResetView();
+          this._vmUserReset = new UserResetViewModel(this._userInfo, this._mUser);
+          this._vmUserReset.SetEmail= dt.Rows[0][this._dbName.strEmail].ToString();
+			 this._UserResetView.DataContext = this._vmUserReset;
+			 this._UserResetView.Show();
+
+			this.UserResetEnabled = false;
                      
         }
 
@@ -150,7 +164,11 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private void ExecuteRegister(object obj)
         {
-            this.SetActivedWindow = false;
+			  this.register = new RegisterView(this);
+			this._vmRegister = new RegisterViewModel(this, this._mUser, this._userInfo,this._messageService);
+			   this.register.DataContext = this._vmRegister;
+            this.register.Show();
+			  this.SetActivedWindow = false;
                                   
         }
     }

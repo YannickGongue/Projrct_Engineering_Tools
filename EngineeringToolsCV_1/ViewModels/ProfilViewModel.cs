@@ -17,10 +17,10 @@ namespace EngineeringToolsCV_1.ViewModels
 		private IImageService _imageService;
 		private IMessageService _messageService;
 		private INavigationBarService _navigationBarService;
-		private readonly IStudentInfo _userInfo;
+		private readonly IStudentInfo _StudentInfo;
 		private MStudentInformations _mStudent;
-		private IStudentWorkInfo _userWorkInfo;
-		private MStudentWorkInfo _mUserWorkInfo;
+		private IStudentWorkInfo _StudentWorkInfo;
+		private MStudentWorkInfo _mStudentWorkInfo;
 
 		public ViewModelCommand NavigateUpdateCommand { get; }
 
@@ -28,29 +28,29 @@ namespace EngineeringToolsCV_1.ViewModels
 									  INavigationBarService navigationBarService,
 								     IMessageService messageService,
 								     IImageService imageService,
-								     IStudentInfo userInfo,
+								     IStudentInfo StudentInfo,
 									  MStudentInformations mStudent,
-									  IStudentWorkInfo userWorkInfo,
-								     MStudentWorkInfo mUserWorkInfo)
+									  IStudentWorkInfo StudentWorkInfo,
+								     MStudentWorkInfo mStudentWorkInfo)
 		{
 			this._navigationBarService = navigationBarService;
 			this._messageService = messageService;
 			this._imageService = imageService;
-			this._userInfo = userInfo;
+			this._StudentInfo = StudentInfo;
 			this._mStudent = mStudent;
-			this._userWorkInfo = userWorkInfo;
-			this._mUserWorkInfo = mUserWorkInfo;
+			this._StudentWorkInfo = StudentWorkInfo;
+			this._mStudentWorkInfo = mStudentWorkInfo;
 
 			this.NavigateUpdateCommand = new NavigateCommand<DashboardViewModel>(
 													new LayoutNavigationService<DashboardViewModel>(navigateStore,
 													() => new DashboardViewModel(navigateStore,
 													                             this._navigationBarService,
 													                             this._messageService,
-													                             this._userInfo,
-													                             this._userWorkInfo,
+													                             this._StudentInfo,
+													                             this._StudentWorkInfo,
 													                             this._imageService,
 													                             this._mStudent,
-													                             this._mUserWorkInfo),
+													                             this._mStudentWorkInfo),
 													this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard")));
 		}
 

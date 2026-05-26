@@ -27,12 +27,12 @@ namespace EngineeringToolsCV_1.ViewModels
 	     private INavigationBarService _navigationBarService;
 	     private IDialogService _dialogService;
 	     private IMessageService _messageService;
-	     private IAuthenticationService _authenticationService;
 	     private IStudentInfo _StudentInfo;
 	     private IStudentWorkInfo _StudentWorkInfo;
 	     private MStudentWorkInfo _mStudentWorkInfo;
 	     private MStudentInformations _mStudentInformations;
 	     private IImageService _imageService;
+        private IUserInfo _userInfo;
 
 
 		//add a SelectedCulture property
@@ -81,25 +81,25 @@ namespace EngineeringToolsCV_1.ViewModels
 
         public mainViewModel(NavigationStore navigationStore,
 									  IImageService imageService,
-									  IAuthenticationService authenticationService,
 									  INavigationBarService navigationBarService,
 									  IDialogService dialogService,
 									  IMessageService messageService,
 									  IStudentInfo studentInfo,
 									  MStudentInformations mStudent, 
                              MUser mUser,
-                             MStudentWorkInfo mStudentWorkInfo)
+                             MStudentWorkInfo mStudentWorkInfo,
+                             IUserInfo userInfo)
         {
             this._navigationstore = navigationStore;
             this._messageService = messageService;
 			   this._dialogService = dialogService;
 			   this._navigationBarService = navigationBarService;
-			   this._authenticationService = authenticationService;
 			   this._imageService = imageService;
 			   this._StudentInfo = studentInfo;
 			   this._mStudentInformations = mStudent;
             this._mUser = mUser;
             this._mStudentWorkInfo = mStudentWorkInfo;
+            this._userInfo = userInfo;
 
             this.executeCommand(navigationStore);
 
@@ -128,15 +128,15 @@ namespace EngineeringToolsCV_1.ViewModels
                 HomeNavigationCommand = new NavigateCommand<HomeViewModel>(
                                         new LayoutNavigationService<HomeViewModel>(navigationStore,
                                         () => new HomeViewModel(navigationStore,
-                                                                this._authenticationService,
-							   													 this._dialogService,
 																					 this._messageService,
 																					 this._navigationBarService,
 																					 this._StudentInfo,
                                                                 this._StudentWorkInfo,
 																					 this._mStudentInformations,                                                          
                                                                 this._mStudentWorkInfo,
-                                                                this._imageService),
+                                                                this._imageService,
+                                                                this._userInfo,
+                                                                this._mUser),
                                         this._navigationBarService.CreateNavigationBar("Home")));
             }
            
