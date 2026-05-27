@@ -10,18 +10,15 @@ namespace EngineeringToolsCV_1.Service
 {
 	public class ImageService : IImageService
 	{
-		private IFileDialogService _fileDialogService;
 		private IMessageService _messageService;
 		private ImageSource imageSource;
 		private ImageSource imageSourcedefault;
 		private string ImagePath;
 
 
-		public ImageService(IFileDialogService fileDialogService, 
-			                 IMessageService messageService)
+		public ImageService( IMessageService messageService)
 		{
-			_fileDialogService = fileDialogService;
-			_messageService = messageService;
+			this._messageService = messageService;
 		}
 
 		public byte[] ConvertToBytes(string path)
@@ -39,17 +36,14 @@ namespace EngineeringToolsCV_1.Service
 			return Path.GetExtension(path);
 		}
 
-		public ImageSource LoadImage(string path)
+		public ImageSource LoadImage(OpenFileDialog dialog)
 		{
-			if (string.IsNullOrEmpty(path))
-			{
-				return imageSourcedefault;
-			}
+			
 			try
 			{
-				if (_fileDialogService.OpenImageFileDialog().ShowDialog() == true)
+				if (dialog.ShowDialog() == true)
 				{
-					ImagePath = _fileDialogService.OpenImageFileDialog().FileName;
+					ImagePath = dialog.FileName;
 					imageSource = new BitmapImage(new Uri(ImagePath));
 					return imageSource;
 				}

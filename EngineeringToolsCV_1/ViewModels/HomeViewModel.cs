@@ -14,7 +14,8 @@ namespace EngineeringToolsCV_1.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        private INavigationBarService _navigationBarService;
+        private IFileDialogService _FiledialogService;
+		  private INavigationBarService _navigationBarService;
 		  private IMessageService _messageService;
 		  private IStudentInfo _StudentInfo;
 		  private IStudentWorkInfo _StudentWorkInfo;
@@ -49,7 +50,8 @@ namespace EngineeringToolsCV_1.ViewModels
                              MStudentWorkInfo mStudentWorkInfo,
                              IImageService imageService,
                              IUserInfo userInfo,
-                             MUser mUser)
+                             MUser mUser,
+                             IFileDialogService fileDialogService)
         {
 			  this._messageService = messageService;
 			  this._navigationBarService = navigationBarService;
@@ -60,6 +62,7 @@ namespace EngineeringToolsCV_1.ViewModels
 			  this._imageService = imageService;
 			  this._userInfo = userInfo;
 			  this._mUser = mUser;
+			  this._FiledialogService = fileDialogService;
 
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(
                 new LayoutNavigationService<LoginViewModel>(navigationStore,
@@ -70,9 +73,10 @@ namespace EngineeringToolsCV_1.ViewModels
                                          this._StudentInfo,
                                          this._StudentWorkInfo,
                                          this._userInfo,
-                                         this._mUser,
+                                         this._FiledialogService,
+													  this._mUser,
                                          this._mStudentInformations,
-                                         this._mStudentWorkInfo),
+                                         this._mStudentWorkInfo ),
                 this._navigationBarService.CreateNavigationBar("Home")));
         }
     }

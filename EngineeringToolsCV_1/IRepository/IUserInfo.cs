@@ -12,6 +12,6 @@ namespace EngineeringToolsCV_1.IRepository
 		Task<DataTable> GetUserInfoAsync(string id, string password);
 		Task<int> UpdateUserInfosAsync(MUser info);
 		Task<int> AddUserInfoAsync(MUser info);
-
+		Task<DataTable> SearchUserInfoAsync(string search);
 	}
 }

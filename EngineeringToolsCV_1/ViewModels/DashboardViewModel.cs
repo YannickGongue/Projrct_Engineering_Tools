@@ -22,6 +22,7 @@ namespace EngineeringToolsCV_1.ViewModels
         private IStudentInfo _userInfo;
         private IStudentWorkInfo _userWorkInfo;
 		  private IImageService _imageService;
+        private IFileDialogService _fileDialogService;
 		  private MStudentInformations _mStudent;
         private MStudentWorkInfo _mUserWorkInfo;
 
@@ -94,13 +95,15 @@ namespace EngineeringToolsCV_1.ViewModels
                                 IStudentInfo userInfo,
 										  IStudentWorkInfo userWorkInfo,
 										  IImageService imageService,
-                                MStudentInformations mStudent,
+										  IFileDialogService fileDialogService,
+										  MStudentInformations mStudent,
                                 MStudentWorkInfo mUserWorkInfo)
         {
             this._navigationBarService = navigationBarService;
             this._messageService = messageService;
             this._userInfo = userInfo;
             this._imageService = imageService;
+            this._fileDialogService = fileDialogService;
             this._mStudent = mStudent;
             this._mUserWorkInfo = mUserWorkInfo;
             this.executeInfoCommand(navigationStore);
@@ -128,7 +131,8 @@ namespace EngineeringToolsCV_1.ViewModels
                                          this._messageService,
                                          this._imageService,
                                          this._userInfo,
-                                         this._mStudent,
+                                         this._fileDialogService,
+													  this._mStudent,
                                          this._userWorkInfo,
                                          this._mUserWorkInfo),
             this._navigationBarService.CreateNavigationBar("Home -> Profil")));
@@ -145,7 +149,8 @@ namespace EngineeringToolsCV_1.ViewModels
                                               this._userWorkInfo,
 															 this._mUserWorkInfo,
 															 this._navigationBarService,
-                                              this._mStudent),
+                                              this._mStudent,
+                                              this._fileDialogService),
 					this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard -> Information")));
         }
 
@@ -161,6 +166,7 @@ namespace EngineeringToolsCV_1.ViewModels
                                         this._navigationBarService,
                                         this._messageService,
                                         this._imageService,
+                                        this._fileDialogService,
                                         this._mStudent,
                                         this._mUserWorkInfo), 
                this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard -> Experiences")));

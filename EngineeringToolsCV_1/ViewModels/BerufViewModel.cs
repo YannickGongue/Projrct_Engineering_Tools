@@ -15,6 +15,7 @@ namespace EngineeringToolsCV_1.ViewModels
 {
     public class BerufViewModel : ViewModelBase
     {
+      private IFileDialogService _FiledialogService;
       private INavigationBarService _navigationBarService;
       private IMessageService _messageService;
       private IStudentWorkInfo _userWorkInfo;
@@ -203,6 +204,7 @@ namespace EngineeringToolsCV_1.ViewModels
 										INavigationBarService navigationBarService,
 										IMessageService messageService,
 										IImageService imageService,
+										IFileDialogService FiledialogService,
 										MStudentInformations mStudentInfos,
                               MStudentWorkInfo mUserWorkInfo)
         {
@@ -214,8 +216,10 @@ namespace EngineeringToolsCV_1.ViewModels
             this._imageService = imageService;
 			   this._mStudentInfos = mStudentInfos;
             this._mUserWorkInfo = mUserWorkInfo;
+            this._FiledialogService = FiledialogService;
             this.StrStartDate = new DateTime();
             this.StrEndDate = new DateTime();
+
 
 
            this.NavigateReturnCommand = new NavigateCommand<DashboardViewModel>(
@@ -226,6 +230,7 @@ namespace EngineeringToolsCV_1.ViewModels
                                             this._userInfo,
                                             this._userWorkInfo,
 														  this._imageService,
+                                            this._FiledialogService,
                                             this._mStudentInfos,
                                             this._mUserWorkInfo),
                this._navigationBarService.CreateNavigationBar("Home -> Dashboard")));

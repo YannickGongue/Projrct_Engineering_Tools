@@ -91,11 +91,11 @@ namespace EngineeringToolsCV_1.ViewModels
             this.dt = new DataTable();
 			   this.SetBackground = Brushes.AliceBlue;
             this.SetIsEnabled = false;
-             dt =   await this._userInfo.GetUserInfoAsync(this._mUser.User_Id, this._mUser.Passwort);
+             dt =   await this._userInfo.SearchUserInfoAsync(this.SetEmail);
             if (dt.Rows.Count > 0)
             {
-                this._vmNewPassword.StrBenutzname = this._mUser.User_Id;
-                this._vmNewPassword.StrPassword = this._mUser.Passwort;
+                this._vmNewPassword.StrBenutzname = dt.Rows[0]["User_Id"].ToString();
+                this._vmNewPassword.StrPassword = dt.Rows[0]["Passwort"].ToString();
             }
             this.newPassword = new NewPassword();
             this.newPassword.DataContext = this._vmNewPassword;

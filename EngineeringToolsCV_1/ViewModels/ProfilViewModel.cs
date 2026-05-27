@@ -14,12 +14,14 @@ namespace EngineeringToolsCV_1.ViewModels
 {
 	public class ProfilViewModel: ViewModelBase
 	{
+		private IFileDialogService _FiledialogService;
 		private IImageService _imageService;
 		private IMessageService _messageService;
 		private INavigationBarService _navigationBarService;
 		private readonly IStudentInfo _StudentInfo;
 		private MStudentInformations _mStudent;
 		private IStudentWorkInfo _StudentWorkInfo;
+
 		private MStudentWorkInfo _mStudentWorkInfo;
 
 		public ViewModelCommand NavigateUpdateCommand { get; }
@@ -29,6 +31,7 @@ namespace EngineeringToolsCV_1.ViewModels
 								     IMessageService messageService,
 								     IImageService imageService,
 								     IStudentInfo StudentInfo,
+									  IFileDialogService FiledialogService,
 									  MStudentInformations mStudent,
 									  IStudentWorkInfo StudentWorkInfo,
 								     MStudentWorkInfo mStudentWorkInfo)
@@ -40,6 +43,8 @@ namespace EngineeringToolsCV_1.ViewModels
 			this._mStudent = mStudent;
 			this._StudentWorkInfo = StudentWorkInfo;
 			this._mStudentWorkInfo = mStudentWorkInfo;
+			this._FiledialogService = FiledialogService;
+
 
 			this.NavigateUpdateCommand = new NavigateCommand<DashboardViewModel>(
 													new LayoutNavigationService<DashboardViewModel>(navigateStore,
@@ -49,6 +54,7 @@ namespace EngineeringToolsCV_1.ViewModels
 													                             this._StudentInfo,
 													                             this._StudentWorkInfo,
 													                             this._imageService,
+																						  this._FiledialogService,
 													                             this._mStudent,
 													                             this._mStudentWorkInfo),
 													this._navigationBarService.CreateNavigationBar("Home -> Profil -> Dashboard")));

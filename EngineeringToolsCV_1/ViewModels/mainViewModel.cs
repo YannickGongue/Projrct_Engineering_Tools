@@ -24,8 +24,8 @@ namespace EngineeringToolsCV_1.ViewModels
         private ObservableCollection<Culture> cultureList;
         private Culture selectedCulture;
         private MUser _mUser;
+        private IFileDialogService _FileDialogService;
 	     private INavigationBarService _navigationBarService;
-	     private IDialogService _dialogService;
 	     private IMessageService _messageService;
 	     private IStudentInfo _StudentInfo;
 	     private IStudentWorkInfo _StudentWorkInfo;
@@ -82,17 +82,17 @@ namespace EngineeringToolsCV_1.ViewModels
         public mainViewModel(NavigationStore navigationStore,
 									  IImageService imageService,
 									  INavigationBarService navigationBarService,
-									  IDialogService dialogService,
 									  IMessageService messageService,
 									  IStudentInfo studentInfo,
 									  MStudentInformations mStudent, 
                              MUser mUser,
                              MStudentWorkInfo mStudentWorkInfo,
-                             IUserInfo userInfo)
+                             IUserInfo userInfo,
+                             IFileDialogService fileDialogService)
         {
+           this._FileDialogService = fileDialogService;
             this._navigationstore = navigationStore;
             this._messageService = messageService;
-			   this._dialogService = dialogService;
 			   this._navigationBarService = navigationBarService;
 			   this._imageService = imageService;
 			   this._StudentInfo = studentInfo;
@@ -136,7 +136,8 @@ namespace EngineeringToolsCV_1.ViewModels
                                                                 this._mStudentWorkInfo,
                                                                 this._imageService,
                                                                 this._userInfo,
-                                                                this._mUser),
+                                                                this._mUser,
+                                                                this._FileDialogService),
                                         this._navigationBarService.CreateNavigationBar("Home")));
             }
            

@@ -15,8 +15,9 @@ using EngineeringToolsCV_1.Views;
 namespace EngineeringToolsCV_1.ViewModels
 {
     public class LoginViewModel : ViewModelBase
-    { 
-        private INavigationBarService _navigatinBarService;
+    {
+		 private IFileDialogService _FiledialogService;
+		 private INavigationBarService _navigatinBarService;
         private IMessageService _messageService;
         private IImageService _imageService;
         private IStudentInfo _StudentInfo;
@@ -104,6 +105,7 @@ namespace EngineeringToolsCV_1.ViewModels
                               IStudentInfo studentInfo,
                               IStudentWorkInfo studentWorkInfo,
                               IUserInfo userInfo,
+                              IFileDialogService fileDialogService,
                               MUser mUser,
 										MStudentInformations mStudentInformations,
                               MStudentWorkInfo mStudentWorkInfo)
@@ -117,6 +119,7 @@ namespace EngineeringToolsCV_1.ViewModels
 			   this._mStudentWorkInfo = mStudentWorkInfo;
 			   this._userInfo = userInfo;
 			   this._mUser = mUser;
+            this._FiledialogService = fileDialogService;
 
 			   this.Username = "gonguego";
             this.Password = "dyna1605";
@@ -131,7 +134,8 @@ namespace EngineeringToolsCV_1.ViewModels
                                                                   this._messageService,
                                                                   this._imageService,
                                                                   this._StudentInfo,
-                                                                  this._mStudentInformations,
+                                                                  this._FiledialogService,
+																						this._mStudentInformations,
                                                                   this._StudentWorkInfo,
                                                                   this._mStudentWorkInfo), 
                                         this._navigatinBarService.CreateNavigationBar("Home -> Profil")),

@@ -23,7 +23,9 @@ namespace EngineeringToolsCV_1.ViewModels
     public class InformationViewModel : ViewModelBase
     {
 		  private string ImagePath;
-        private IImageService _imageService;
+        private OpenFileDialog dialog;
+		  private IFileDialogService _fileDialogService;
+		  private IImageService _imageService;
         private IMessageService _messageService;
         private INavigationBarService _navigationBarService;
 		  private readonly IStudentInfo _userInfo;
@@ -368,16 +370,18 @@ namespace EngineeringToolsCV_1.ViewModels
 												IStudentWorkInfo userWorkInfo,
 												MStudentWorkInfo mUserWorkInfo,
 												INavigationBarService navigationBarService,
-												MStudentInformations mStudentInfos)
+												MStudentInformations mStudentInfos,
+                                    IFileDialogService fileDialogService)
         {
-         this._userWorkInfo = userWorkInfo;
-			this._mUserWorkInfo = mUserWorkInfo;
-			this._imageService = imageService;
-			this._messageService = messageService;
-         this._navigationBarService = navigationBarService;
-         this._userInfo = userInfo;
-			this._mStudentInfos = mStudentInfos;
-            this.strDate = new DateTime();
+            this._userWorkInfo = userWorkInfo;
+			   this._mUserWorkInfo = mUserWorkInfo;
+			   this._imageService = imageService;
+			   this._messageService = messageService;
+            this._navigationBarService = navigationBarService;
+            this._userInfo = userInfo;
+			   this._mStudentInfos = mStudentInfos;
+            this._fileDialogService = fileDialogService;
+			   this.strDate = new DateTime();
             CityList = new ObservableCollection<string>
             {
                 "Salzgitter", "Braunschweig", "Hannover", "Hildesheim", "Salder"
@@ -423,27 +427,24 @@ namespace EngineeringToolsCV_1.ViewModels
             catch (Exception ex)
             {
 				   this._messageService.ShowErrorMessage(ex.Message);
-            }
-            
-        }
-
-        
+            }       
+        }   
 
         private void ExecuteLoadMethod(object obj)
         {
             try
             {
-                this.SelectedImage = this._imageService.LoadImage(this.ImagePath);
+                this.dialog = this._fileDialogService.OpenImageFileDialog();
+				    this.SelectedImage = this._imageService.LoadImage(this.dialog);
             }
             catch (Exception ex)
             {
 				  this._messageService.ShowErrorMessage(ex.Message);
 			   }
-		}
+		  }
 
         public void executeCancelCommand(NavigationStore navigationStore)
         { 
-
             NavigateCancelCommand = new NavigateCommand<DashboardViewModel>(
                new LayoutNavigationService<DashboardViewModel>(navigationStore,
                () => new DashboardViewModel(navigationStore,
@@ -452,10 +453,10 @@ namespace EngineeringToolsCV_1.ViewModels
                                             this._userInfo,
                                             this._userWorkInfo,
                                             this._imageService,
+                                            this._fileDialogService,
                                             this._mStudentInfos,
                                             this._mUserWorkInfo), 
-               this._navigationBarService.CreateNavigationBar("Home->Profil-> Dashboard")));
-          
+               this._navigationBarService.CreateNavigationBar("Home->Profil-> Dashboard")));  
         }
       
         private bool CanExecute(object obj)
@@ -465,12 +466,23 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteSaveMethod(object obj)
         {
-            int iCount;
-           
-            string fileName = this._imageService.FileName(ImagePath);
-            string FileType = this._imageService.FileExtension(ImagePath);
-            Byte[] hexData = this._imageService.ConvertToBytes(ImagePath);
-                                                             
+           string fileName;
+			  string FileType;
+			  Byte[] hexData;
+
+			  if (this.SelectedImage !=null)
+           {
+				 fileName = this._imageService.FileName(this.dialog.FileName);
+			    FileType = this._imageService.FileExtension(this.dialog.FileName);
+				 hexData = this._imageService.ConvertToBytes(this.dialog.FileName);
+			  }
+           else
+           {
+				 fileName = null;
+				 FileType = null;
+				 hexData = null;
+			  }
+			                                                              
             this._mStudentInfos.Id = this.StrTitle;
             this._mStudentInfos.Name = this.StrName;
             this._mStudentInfos.Vorname = this.StrVorname;
