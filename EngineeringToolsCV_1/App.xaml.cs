@@ -5,14 +5,8 @@ using EngineeringToolsCV_1.ViewModels;
 using EngineeringToolsCV_1.Views;
 using EngineeringToolsCV_1.DatabaseManager;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Globalization;
 using EngineeringToolsCV_1.Repositories;
 using EngineeringToolsCV_1.IRepository;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,17 +50,13 @@ namespace EngineeringToolsCV_1
 												  .ConnectionString;
          services.AddSingleton<IConnectionFactory>(new SqlConnectionFactory(strConnectionString));			
          services.AddSingleton<DBName>();
-			services.AddSingleton<DbManager>();
-
 			services.AddSingleton<NavigationStore>();
-         
-         services.AddSingleton<ErrorMessageViewModel>();
+			services.AddSingleton<MainWindow>();
 
 			services.AddTransient<MUser>();
 			services.AddTransient<MStudentInformations>();
 			services.AddTransient<MStudentWorkInfo>();
-
-			services.AddSingleton<MainWindow>();
+			services.AddTransient<ErrorMessageViewModel>();
 			services.AddTransient<HomeViewModel>();
 			services.AddTransient<mainViewModel>();
 			services.AddTransient<LoginViewModel>();
