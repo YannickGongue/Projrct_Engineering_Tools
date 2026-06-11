@@ -15,7 +15,7 @@ namespace EngineeringToolsCV_1.Models
         public string Standort { get; set; }
         public string OrtType { get; set; }
         public string ArbeitsArt { get; set; }
-        public string Email { get; set; }
-       
-    }
+        public string UserEmail { get; set; }
+        public MUser mUsers { get; set; }
+	}
 }

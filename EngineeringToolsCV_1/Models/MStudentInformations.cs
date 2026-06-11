@@ -22,6 +22,6 @@ namespace EngineeringToolsCV_1.Models
         public string Land { get; set; }
         public string FileName { get; set; }
 
-
-    }
+        public MUser mUser { get; set; }
+	}
 }
