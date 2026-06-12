@@ -7,13 +7,13 @@ namespace EngineeringToolsCV_1.DatabaseManager
    public class DBName
    {
         //Tabelle User
-        public string StrTBL_User = "Tbl_User";
+        public string StrTBL_User = "Users";
         public string strId = "Id";
         public string strEmail = "Email";
         public string StrPasswort = "Passwort";
 
         //Tabelle Informationsdaten
-        public string strTBL_StudentsInfo = "TBLStudentsDaten";
+        public string strTBL_StudentsInfo = "StudentInformations";
         public string strName = "Name";
         public string strVorname = "Vorname";
         public string strStadt = "Stadt";
@@ -28,7 +28,7 @@ namespace EngineeringToolsCV_1.DatabaseManager
         public string strImageData = "ImageData";
 
         //Tabelle Berufserfahrung
-        public string strTBL_Beruf = "TBLBerufsErfahrung";
+        public string strTBL_Beruf = "StudentWorkInfo";
         public string strAufgabe = "Aufgabe";
         public string strTitel = "Titel";
         public string strSkills = "Skills";

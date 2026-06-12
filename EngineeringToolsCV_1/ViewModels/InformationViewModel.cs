@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using EngineeringToolsCV_1.DatabaseManager;
 using System.Data;
 using EngineeringToolsCV_1.IRepository;
+using System.Collections.Generic;
 
 namespace EngineeringToolsCV_1.ViewModels
 {
@@ -405,23 +406,24 @@ namespace EngineeringToolsCV_1.ViewModels
         }
 
         private async void ExecuteSearchMethod(object obj)
-        {          
+        {        
+             List<MStudentInformations> studentInfos = new List<MStudentInformations>();
 
-             this._mStudentInfos = await this._userInfo.SearchStudentInfosAsync(this.Strsearch);
+			   studentInfos = await this._userInfo.SearchStudentInfosAsync(this.Strsearch);
 
             try
             {
-                if (this._mStudentInfos != null)
+                if (studentInfos != null)
                 {
-                    this.StrName = this._mStudentInfos.Name;
-                    this.StrVorname = this._mStudentInfos.Vorname;
-                    this.StrEmail = this._mStudentInfos.Email;
-                    this.StrStraße = this._mStudentInfos.Straße;
-                    this.StrNummer = this._mStudentInfos.Straßenummer;
-                    this.StrPostleitzahl = this._mStudentInfos.Postleitzahl;
-                    this.SelectedCity = this._mStudentInfos.Stadt;
-                    this.StrDate = Convert.ToDateTime(this._mStudentInfos.Datum);
-                    this.strLand = this._mStudentInfos.Land;
+                    this.StrName = studentInfos[0].Name;
+                    this.StrVorname = studentInfos[0].Vorname;
+                    this.StrEmail = studentInfos[0].Email;
+                    this.StrStraße = studentInfos[0].Straße;
+                    this.StrNummer = studentInfos[0].Straßenummer;
+                    this.StrPostleitzahl = studentInfos[0].Postleitzahl;
+                    this.SelectedCity = studentInfos[0].Stadt;
+                    this.StrDate = Convert.ToDateTime(studentInfos[0].Datum);
+                    this.strLand = studentInfos[0].Land;
                 }
             }
             catch (Exception ex)

@@ -36,7 +36,7 @@ namespace EngineeringToolsCV_1.Repositories
             using var cmd = new SqlCommand(strQueryRegister, conn);
 
             cmd.Parameters.AddWithValue("@1", info.Titel);
-            cmd.Parameters.AddWithValue("@2", info.Email);
+            cmd.Parameters.AddWithValue("@2", info.UserEmail);
             cmd.Parameters.AddWithValue("@3", info.Skills);
             cmd.Parameters.AddWithValue("@4", info.Firma);
             cmd.Parameters.AddWithValue("@5", info.StartDatum);

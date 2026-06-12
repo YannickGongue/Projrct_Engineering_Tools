@@ -16,10 +16,10 @@ namespace EngineeringToolsCV_1.DatabaseManager
             this._userWorkInfo = userWorkInfo;
         }
 
-        public Task<MStudentInformations> SearchStudentInfosAsync(string search)
-        {
-            return _userInfo.SearchStudentInfosAsync(search);
-        }
+        //public Task<MStudentInformations> SearchStudentInfosAsync(string search)
+        //{
+        //    return _userInfo.SearchStudentInfosAsync(search);
+        //}
 
         //public Task<int> GetUserInfoAsync(string id, string password)
         //{
@@ -47,10 +47,10 @@ namespace EngineeringToolsCV_1.DatabaseManager
         //  return _userInfo.AddUserInfoAsync(UserInfo);
 		  //}
 
-        public Task<int> RemoveStudentInfosAsync(string id)
-        {
-            return _userInfo.RemoveStudentInfosAsync(id);
-        }
+        //public Task<int> RemoveStudentInfosAsync(string id)
+        //{
+        //    return _userInfo.RemoveStudentInfosAsync(id);
+        //}
 
 
     }

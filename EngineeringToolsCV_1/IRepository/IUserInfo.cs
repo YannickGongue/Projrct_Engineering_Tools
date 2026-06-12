@@ -9,9 +9,10 @@ namespace EngineeringToolsCV_1.IRepository
 {
 	public interface IUserInfo
 	{
-		Task<DataTable> GetUserInfoAsync(string id, string password);
+		Task<MUser> GetUserInfoAsync(string id, string password);
+		Task<bool> LoginUserAsync(string strId, string Password);
 		Task<int> UpdateUserInfosAsync(MUser info);
 		Task<int> AddUserInfoAsync(MUser info);
-		Task<DataTable> SearchUserInfoAsync(string search);
+		Task<MUser> SearchUserInfoAsync(string search);
 	}
 }

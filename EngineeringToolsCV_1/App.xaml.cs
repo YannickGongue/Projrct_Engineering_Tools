@@ -48,7 +48,8 @@ namespace EngineeringToolsCV_1
 			string strConnectionString = ConfigurationManager
 												  .ConnectionStrings["ConnectionString"]
 												  .ConnectionString;
-         services.AddSingleton<IConnectionFactory>(new SqlConnectionFactory(strConnectionString));			
+			services.AddDbContext<StudentContext>(options => options.UseSqlServer(strConnectionString));
+			//services.AddSingleton<IConnectionFactory>(new SqlConnectionFactory(strConnectionString));			
          services.AddSingleton<DBName>();
 			services.AddSingleton<NavigationStore>();
 			services.AddSingleton<MainWindow>();

@@ -17,7 +17,6 @@ namespace EngineeringToolsCV_1.Command
 {
     public class NavigateLoginCommand : ViewModelCommand
     {
-      private DataTable dt;
       private IMessageService _messageService;
       private LoginViewModel _ViewModel;
       private INavigateService<ProfilViewModel> _navigateService;
@@ -40,10 +39,8 @@ namespace EngineeringToolsCV_1.Command
 
          try
          {
-            this.dt = new DataTable();
-				this.dt = await this._userInfo.GetUserInfoAsync(this._vmLogin.Username, this._vmLogin.Password);
 
-            if (this.dt.Rows.Count > 0)
+            if (await this._userInfo.LoginUserAsync(this._vmLogin.Username, this._vmLogin.Password))
             {
                this._navigateService.Navigate();
             }

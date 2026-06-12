@@ -291,7 +291,7 @@ namespace EngineeringToolsCV_1.ViewModels
                 //{
 
                 this._mUserWorkInfo.Titel = this.StrTitel;
-                this._mUserWorkInfo.Email = this.StrEmail;
+                this._mUserWorkInfo.UserEmail = this.StrEmail;
                 this._mUserWorkInfo.Firma = this.StrUnternehmen;
                 this._mUserWorkInfo.StartDatum = this.StrStartDate.ToString();
                 this._mUserWorkInfo.EndDatum = this.StrEndDate.ToString();
