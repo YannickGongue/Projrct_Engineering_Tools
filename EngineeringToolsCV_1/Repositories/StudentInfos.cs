@@ -7,43 +7,31 @@ using EngineeringToolsCV_1.IRepository;
 using EngineeringToolsCV_1.DatabaseManager;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace EngineeringToolsCV_1.Repositories
 {
     public class StudentInfos : IStudentInfo
     {
-        private readonly IConnectionFactory _connectionFactory;
         private StudentContext dbContext;
 
-        public StudentInfos(IConnectionFactory connectionFactory, StudentContext studentContext)
+        public StudentInfos( StudentContext studentContext)
         {
-            this._connectionFactory = connectionFactory;
             this.dbContext = studentContext;
         }
 
 		public async Task<MStudentInformations> GetStudentInfosByEmailAsync(string email)
 		{
 			return await this.dbContext.StudentInformations
-											.Where(c => c.Email == email)
-											.FirstOrDefaultAsync();
+										   	.Where(c => c.StudentEmail == email)
+										   	.FirstOrDefaultAsync();
 		}
 
 		public async Task RemoveStudentInfosAsync(string studentId)
       {
-         //using var conn = _connectionFactory.Create();
-         //using var cmd = new SqlCommand(@"
-         //    DELETE FROM TBLStudentsDaten 
-         //    WHERE Id = @Id
-         //", conn);
-
-         //cmd.Parameters.AddWithValue("@Id", studentId);
-
-         //await conn.OpenAsync();
-         //return await cmd.ExecuteNonQueryAsync();
           var studentInfo = await GetStudentInfosByEmailAsync(studentId);
 			
-			this.dbContext.StudentInformations.Remove(studentInfo);
+			 this.dbContext.StudentInformations.Remove(studentInfo);
 			 await this.dbContext.SaveChangesAsync();
 
 		}
@@ -51,43 +39,7 @@ namespace EngineeringToolsCV_1.Repositories
 
 
 		public async Task<int> AddStudentInfosAsync(MStudentInformations info)
-        {
-      //      string strQueryRegister = string.Format("INSERT INTO {0} ({1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}) VALUES(@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13)",
-      //                                              this._dbName.strTBL_StudentsInfo,
-      //                                              this._dbName.strId, this._dbName.strName,
-      //                                              this._dbName.strVorname, this._dbName.strEmail,
-      //                                              this._dbName.strStraße, this._dbName.strNummer,
-      //                                              this._dbName.strPostleitzahl, this._dbName.strStadt,
-      //                                              this._dbName.strDatum, this._dbName.strLand,
-      //                                              this._dbName.strImageData, this._dbName.strFileName, 
-      //                                              this._dbName.strContentType);
-
-      //      using var conn = _connectionFactory.Create();
-      //      using var cmd = new SqlCommand();
-      //      cmd.Connection = conn;
-
-      //      cmd.Parameters.AddWithValue("@1", info.Id);
-      //      cmd.Parameters.AddWithValue("@2", info.Name);
-      //      cmd.Parameters.AddWithValue("@3", info.Vorname);
-      //      cmd.Parameters.AddWithValue("@4", info.Email);
-      //      cmd.Parameters.AddWithValue("@5", info.Straße);
-      //      cmd.Parameters.AddWithValue("@6", info.Straßenummer);
-      //      cmd.Parameters.AddWithValue("@7", info.Postleitzahl);
-      //      cmd.Parameters.AddWithValue("@8", info.Stadt);
-      //      cmd.Parameters.AddWithValue("@9", info.Datum);
-      //      cmd.Parameters.AddWithValue("@10", info.Land);
-      //      cmd.Parameters.Add("@11", SqlDbType.VarBinary,-1).Value = info.ImageToByte;
-      //      cmd.Parameters.AddWithValue("@12", info.FileName);
-      //      cmd.Parameters.AddWithValue("@13", info.ContentType);
-
-			   //cmd.CommandTimeout = 120;
-
-			   //cmd.CommandType = CommandType.Text;
-      //      cmd.CommandText = strQueryRegister;
-
-      //      await conn.OpenAsync();
-      //      return await cmd.ExecuteNonQueryAsync();
-
+      {
           this.dbContext.StudentInformations.Add(info);
           return await this.dbContext.SaveChangesAsync();
 		}
@@ -129,7 +81,7 @@ namespace EngineeringToolsCV_1.Repositories
     //       }
                                
             return await this.dbContext.StudentInformations
-                                        .Where(c => c.Email == search)
+                                        .Where(c => c.UserId == search)
                                         .ToListAsync();
         }
 

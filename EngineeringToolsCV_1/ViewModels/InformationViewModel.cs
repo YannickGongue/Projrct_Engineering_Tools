@@ -23,7 +23,6 @@ namespace EngineeringToolsCV_1.ViewModels
 {
     public class InformationViewModel : ViewModelBase
     {
-		  private string ImagePath;
         private OpenFileDialog dialog;
 		  private IFileDialogService _fileDialogService;
 		  private IImageService _imageService;
@@ -417,7 +416,7 @@ namespace EngineeringToolsCV_1.ViewModels
                 {
                     this.StrName = studentInfos[0].Name;
                     this.StrVorname = studentInfos[0].Vorname;
-                    this.StrEmail = studentInfos[0].Email;
+                    this.StrEmail = studentInfos[0].StudentEmail;
                     this.StrStraße = studentInfos[0].Straße;
                     this.StrNummer = studentInfos[0].Straßenummer;
                     this.StrPostleitzahl = studentInfos[0].Postleitzahl;
@@ -485,10 +484,10 @@ namespace EngineeringToolsCV_1.ViewModels
 				 hexData = null;
 			  }
 			                                                              
-            this._mStudentInfos.Id = this.StrTitle;
+            this._mStudentInfos.UserId = this.StrTitle;
             this._mStudentInfos.Name = this.StrName;
             this._mStudentInfos.Vorname = this.StrVorname;
-            this._mStudentInfos.Email = this.StrEmail;
+            this._mStudentInfos.StudentEmail = this.StrEmail;
             this._mStudentInfos.Straße = this.StrStraße;
             this._mStudentInfos.Straßenummer = this.StrNummer;
             this._mStudentInfos.Postleitzahl = this.StrPostleitzahl;
@@ -496,7 +495,7 @@ namespace EngineeringToolsCV_1.ViewModels
             this._mStudentInfos.Land = this.StrBirthPlace;
             this._mStudentInfos.Datum = this.StrDate.ToString("yyyy-MM-dd");
             this._mStudentInfos.FileName = fileName;
-            this._mStudentInfos.ImageToByte = hexData;
+            this._mStudentInfos.ImageData = hexData;
             this._mStudentInfos.ContentType = FileType;
 
            try

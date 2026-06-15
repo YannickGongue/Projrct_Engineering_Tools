@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MessageDialog" 
         Height="270" 
-        Width="500"
+        Width="700"
         WindowState="Normal" 
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None">
@@ -17,13 +17,13 @@
              FontSize="22"
              Margin="2,2,0,0"
              Background="AliceBlue"
-             Width="500"
+             Width="700"
              Height="31"
              VerticalAlignment="Top"/>
         <Border BorderBrush="Gray"
                 BorderThickness="1"
                 Height="170"
-                Margin="5,5,5,15">
+                Margin="5,45,5,0" VerticalAlignment="Top">
            <TextBlock 
             Name="ErrorMessage"
             Text="{Binding Path=SetErrorMessage}"

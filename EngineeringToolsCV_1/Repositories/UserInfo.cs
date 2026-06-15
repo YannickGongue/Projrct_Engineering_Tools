@@ -4,7 +4,7 @@ using EngineeringToolsCV_1.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +14,9 @@ namespace EngineeringToolsCV_1.Repositories
 	public class UserInfo : IUserInfo
 	{
 		private StudentContext _stDbContext;
-		private readonly IConnectionFactory _connectionFactory;
 
-		public UserInfo(IConnectionFactory connectionFactory, StudentContext stDbContext)
+		public UserInfo( StudentContext stDbContext)
 		{
-			this._connectionFactory = connectionFactory;
 			this._stDbContext = stDbContext;
 
 		}
@@ -45,7 +43,7 @@ namespace EngineeringToolsCV_1.Repositories
 			return await this._stDbContext.SaveChangesAsync();
 		}
 
-		public async Task<bool> LoginAsync(string strId, string strPassword)
+		public async Task<bool> LoginUserAsync(string strId, string strPassword)
 		{
 			return await this._stDbContext.Users.AnyAsync(u =>
 															 u.User_Id == strId &&
@@ -82,7 +80,7 @@ namespace EngineeringToolsCV_1.Repositories
 			                                     u.Passwort == password);
 		}
 
-		public async Task<int> UpdateUserInfosAsync(MUser info)
+		public async Task<bool> UpdateUserInfosAsync(string userId, string email, string password)
 		{
 			//string strQueryRegister = string.Format("UPDATE {0} SET {1}= @1, {2}=@2 WHERE {3} = @3 ",
 			//													  this._dbName.StrTBL_User,
@@ -102,6 +100,21 @@ namespace EngineeringToolsCV_1.Repositories
 			//cmd.CommandText = strQueryRegister;
 			//await conn.OpenAsync();
 			//return await cmd.ExecuteNonQueryAsync();
+
+			var user = await _stDbContext.Users
+										  .FirstOrDefaultAsync(u => u.User_Id == userId);
+
+			if (user == null)
+			{
+				return false;
+			}
+
+			user.Email = email;
+			user.Passwort = password;
+
+			await _stDbContext.SaveChangesAsync();
+
+			return true;
 		}
 
 		public async Task<MUser> SearchUserInfoAsync(string search)

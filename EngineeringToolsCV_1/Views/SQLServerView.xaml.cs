@@ -40,9 +40,9 @@ namespace EngineeringToolsCV_1.Views
         private ErrorMessageViewModel _vmDialogMessage;
         private MStudentWorkInfo _mUserWorkInfo;
 
-        SqlConnection con = new SqlConnection();
-        SqlCommand com = new SqlCommand();
-        SqlDataReader dr;
+        //SqlConnection con = new SqlConnection();
+        //SqlCommand com = new SqlCommand();
+        //SqlDataReader dr;
 
         public SQLServerView(RegisterViewModel userRegister ,
                              UserResetViewModel  vmUserReset,
@@ -107,12 +107,12 @@ namespace EngineeringToolsCV_1.Views
 
         private void ConnectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (con.State == ConnectionState.Open)
-            {
-                con.Close();
-            }
-            con.Open();
-            con.Close();
+            //if (con.State == ConnectionState.Open)
+            //{
+            //    con.Close();
+            //}
+            //con.Open();
+            //con.Close();
             MessageBox.Show("Connected to the " + this.Cmbdatabase.Text + " Successfully", "Congrats", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
@@ -142,26 +142,26 @@ namespace EngineeringToolsCV_1.Views
                 if (cmbAuthenticationType.Text.Equals("Windows Authentication"))
                 {
                     this.ServerViewModel.ConnectionString = @"Server = " + this.CmbServername.Text + "; Integrated Security = SSPI;";
-                    con.ConnectionString = ServerViewModel.ConnectionString;
+                    //con.ConnectionString = ServerViewModel.ConnectionString;
                 }
                 else if (cmbAuthenticationType.Text.Equals("SQL Server Authentication"))
                 {
                     this.ServerViewModel.ConnectionString = @"Server = " + this.CmbServername.Text + "; User Id =" + this.Username.Text + "; Password=" + this.Passwort.Text + ";";
-                    con.ConnectionString = this.ServerViewModel.ConnectionString;
+                    //con.ConnectionString = this.ServerViewModel.ConnectionString;
                 }
-                con.Open();
-                com.Connection = con;
-                com.CommandText = "SELECT DB_NAME(database_id) AS[Database] FROM sys.databases; ";
-                dr = com.ExecuteReader();
-                while (dr.Read())
-                {
-                    this.ServerViewModel.ListOfDatabases.Insert(icount, dr["Database"].ToString());
-                    icount++;
-                }
+                //con.Open();
+                //com.Connection = con;
+                //com.CommandText = "SELECT DB_NAME(database_id) AS[Database] FROM sys.databases; ";
+                //dr = com.ExecuteReader();
+                //while (dr.Read())
+                //{
+                //    this.ServerViewModel.ListOfDatabases.Insert(icount, dr["Database"].ToString());
+                //    icount++;
+                //}
 
                 this.Cmbdatabase.ItemsSource = this.ServerViewModel.ListOfDatabases;
                 
-                con.Close();
+                //con.Close();
             }
             catch (Exception ex)
             {

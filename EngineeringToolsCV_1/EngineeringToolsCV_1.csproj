@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.5.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
     <PackageReference Include="RemoteFramework.EF31" Version="0.3.1" />
     <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />

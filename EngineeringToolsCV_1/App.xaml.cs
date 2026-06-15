@@ -10,7 +10,7 @@ using System.Windows;
 using EngineeringToolsCV_1.Repositories;
 using EngineeringToolsCV_1.IRepository;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
 namespace EngineeringToolsCV_1
 {
     /// <summaruserLoginy>
@@ -48,9 +48,7 @@ namespace EngineeringToolsCV_1
 			string strConnectionString = ConfigurationManager
 												  .ConnectionStrings["ConnectionString"]
 												  .ConnectionString;
-			services.AddDbContext<StudentContext>(options => options.UseSqlServer(strConnectionString));
-			//services.AddSingleton<IConnectionFactory>(new SqlConnectionFactory(strConnectionString));			
-         services.AddSingleton<DBName>();
+			services.AddDbContext<StudentContext>(options => options.UseSqlServer(strConnectionString + ";MultipleActiveResultSets=True"));
 			services.AddSingleton<NavigationStore>();
 			services.AddSingleton<MainWindow>();
 

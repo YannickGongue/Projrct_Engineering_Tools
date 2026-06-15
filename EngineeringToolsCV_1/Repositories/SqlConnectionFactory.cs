@@ -15,9 +15,9 @@ namespace EngineeringToolsCV_1.Repositories
             this._connectionString = connectionString;
         }
 
-        public SqlConnection Create()
-        {
-           return new SqlConnection(_connectionString);
-        }
+        //public SqlConnection Create()
+        //{
+        //   return new SqlConnection(_connectionString);
+        //}
     }
 }

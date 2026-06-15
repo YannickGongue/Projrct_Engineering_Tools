@@ -88,10 +88,10 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteSearchEmail(object obj)
         {
-            this.dt = new DataTable();
 			   this.SetBackground = Brushes.AliceBlue;
             this.SetIsEnabled = false;
-             dt =   await this._userInfo.SearchUserInfoAsync(this.SetEmail);
+
+            this._mUser =   await this._userInfo.SearchUserInfoAsync(this.SetEmail);
             if (dt.Rows.Count > 0)
             {
                 this._vmNewPassword.StrBenutzname = dt.Rows[0]["User_Id"].ToString();

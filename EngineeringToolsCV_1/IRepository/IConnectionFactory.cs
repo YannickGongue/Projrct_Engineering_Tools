@@ -7,6 +7,6 @@ namespace EngineeringToolsCV_1.IRepository
 {
     public interface IConnectionFactory
     {
-        SqlConnection Create();
+        //SqlConnection Create();
     }
 }
