@@ -28,8 +28,8 @@ namespace EngineeringToolsCV_1.ViewModels
 		  private IImageService _imageService;
         private IMessageService _messageService;
         private INavigationBarService _navigationBarService;
-		  private readonly IStudentInfo _userInfo;
-        private IStudentWorkInfo _userWorkInfo;
+		  private readonly IStudentInfo _IstudentInfo;
+        private IStudentWorkInfo _IstudentWorkInfo;
         private MStudentWorkInfo _mUserWorkInfo;
 
         private MStudentInformations _mStudentInfos;
@@ -66,7 +66,10 @@ namespace EngineeringToolsCV_1.ViewModels
         public ICommand LoadCommand { get; set; }
         public ICommand NavigateSearchCommand { get; set; }
 
-        public Brush ColorDate
+        public ICommand DeleteCommand { get; set; }
+
+
+		  public Brush ColorDate
         {
             get
             {
@@ -366,19 +369,19 @@ namespace EngineeringToolsCV_1.ViewModels
         public InformationViewModel(NavigationStore navigationStore,
 												IImageService imageService,
 												IMessageService messageService,
-											   IStudentInfo userInfo,
-												IStudentWorkInfo userWorkInfo,
+											   IStudentInfo IstudentInfo,
+												IStudentWorkInfo IstudentWorkInfo,
 												MStudentWorkInfo mUserWorkInfo,
 												INavigationBarService navigationBarService,
 												MStudentInformations mStudentInfos,
                                     IFileDialogService fileDialogService)
         {
-            this._userWorkInfo = userWorkInfo;
+            this._IstudentWorkInfo = IstudentWorkInfo;
 			   this._mUserWorkInfo = mUserWorkInfo;
 			   this._imageService = imageService;
 			   this._messageService = messageService;
             this._navigationBarService = navigationBarService;
-            this._userInfo = userInfo;
+            this._IstudentInfo = IstudentInfo ;
 			   this._mStudentInfos = mStudentInfos;
             this._fileDialogService = fileDialogService;
 			   this.strDate = new DateTime();
@@ -402,17 +405,28 @@ namespace EngineeringToolsCV_1.ViewModels
             this.SaveCommand = new DelegateCommand(ExecuteSaveMethod, CanExecute);
             this.LoadCommand = new DelegateCommand(ExecuteLoadMethod, CanExecute);
             this.NavigateSearchCommand = new DelegateCommand(ExecuteSearchMethod, CanExecute);
-        }
+            this.DeleteCommand = new DelegateCommand(ExecuteDeleteMethod, CanExecute);
+		  }
 
-        private async void ExecuteSearchMethod(object obj)
-        {        
-             List<MStudentInformations> studentInfos = new List<MStudentInformations>();
+		private async void ExecuteDeleteMethod(object obj)
+		{
+        bool bflag;
+        bflag = await this._IstudentInfo.RemoveStudentInfosAsync(this.Strsearch);
+        if(bflag)
+         {
+            this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich gelöscht");
+			}
+		}
 
-			   studentInfos = await this._userInfo.SearchStudentInfosAsync(this.Strsearch);
+		private async void ExecuteSearchMethod(object obj)
+      {        
+         List<MStudentInformations> studentInfos = new List<MStudentInformations>();
+
+			studentInfos = await this._IstudentInfo.SearchStudentInfosAsync(this.Strsearch);
 
             try
             {
-                if (studentInfos != null)
+                if (studentInfos.Count > 0)
                 {
                     this.StrName = studentInfos[0].Name;
                     this.StrVorname = studentInfos[0].Vorname;
@@ -423,13 +437,19 @@ namespace EngineeringToolsCV_1.ViewModels
                     this.SelectedCity = studentInfos[0].Stadt;
                     this.StrDate = Convert.ToDateTime(studentInfos[0].Datum);
                     this.strLand = studentInfos[0].Land;
-                }
+                    this.SelectedImage = this._imageService.ConvertToImage(studentInfos[0].ImageData);
+                    this.StrBirthPlace = studentInfos[0].Land;
+				    }
+                else
+                {
+                  this._messageService.ShowErrorMessage("die Einträge wurden nicht gefunden, bitte überprüfen Sie die Eingabe");
+				}
             }
             catch (Exception ex)
             {
 				   this._messageService.ShowErrorMessage(ex.Message);
             }       
-        }   
+      }   
 
         private void ExecuteLoadMethod(object obj)
         {
@@ -451,8 +471,8 @@ namespace EngineeringToolsCV_1.ViewModels
                () => new DashboardViewModel(navigationStore,
                                             this._navigationBarService,
                                             this._messageService,
-                                            this._userInfo,
-                                            this._userWorkInfo,
+                                            this._IstudentInfo,
+                                            this._IstudentWorkInfo,
                                             this._imageService,
                                             this._fileDialogService,
                                             this._mStudentInfos,
@@ -565,10 +585,9 @@ namespace EngineeringToolsCV_1.ViewModels
                 }
                 else
                 {
-                    if (await this._userInfo.AddStudentInfosAsync(this._mStudentInfos) > 0)
+                    if (await this._IstudentInfo.AddStudentInfosAsync(this._mStudentInfos) > 0)
                     {
-                        this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich in die Datenbank hinzugefügt");
-						
+                        this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich in die Datenbank hinzugefügt");					
                     }
                 }               
             }

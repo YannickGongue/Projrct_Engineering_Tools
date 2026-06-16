@@ -20,23 +20,27 @@ namespace EngineeringToolsCV_1.Repositories
             this.dbContext = studentContext;
         }
 
-		public async Task<MStudentInformations> GetStudentInfosByEmailAsync(string email)
+		public async Task<MStudentInformations> GetStudentInfosByEmailAsync(string studentId)
 		{
 			return await this.dbContext.StudentInformations
-										   	.Where(c => c.StudentEmail == email)
+										   	.Where(c => c.UserId == studentId)
 										   	.FirstOrDefaultAsync();
 		}
 
-		public async Task RemoveStudentInfosAsync(string studentId)
+		public async Task<bool> RemoveStudentInfosAsync(string studentId)
       {
-          var studentInfo = await GetStudentInfosByEmailAsync(studentId);
+         var studentInfo = await GetStudentInfosByEmailAsync(studentId);
 			
-			 this.dbContext.StudentInformations.Remove(studentInfo);
-			 await this.dbContext.SaveChangesAsync();
-
+			this.dbContext.StudentInformations.Remove(studentInfo);
+			if( await this.dbContext.SaveChangesAsync() > 0)
+         {
+				return true;
+			}
+         else
+         {
+				return false;
+			}
 		}
-
-
 
 		public async Task<int> AddStudentInfosAsync(MStudentInformations info)
       {
@@ -44,47 +48,11 @@ namespace EngineeringToolsCV_1.Repositories
           return await this.dbContext.SaveChangesAsync();
 		}
 
-        public async Task<List<MStudentInformations>> SearchStudentInfosAsync(string search)
-        {
-			 //List<MStudentInformations> studentInfos = new List<MStudentInformations>();
-			
-			 //string strQuery = String.Format("SELECT {1},{2},{3},{4},{5},{6},{7},{8},{9} FROM {0} WHERE {10}= @1",
-    //                                         this._dbName.strTBL_StudentsInfo, this._dbName.strName,
-    //                                         this._dbName.strVorname, this._dbName.strEmail,
-    //                                         this._dbName.strStraße, this._dbName.strNummer,
-    //                                         this._dbName.strPostleitzahl, this._dbName.strStadt,
-    //                                         this._dbName.strDatum, this._dbName.strLand, this._dbName.strId);
-         
-    //        using var conn = _connectionFactory.Create();
-    //        using var cmd = new SqlCommand();
-    //        cmd.Connection = conn;
-
-    //        cmd.Parameters.AddWithValue("@1", search);
-    //       using (SqlDataReader reader = await cmd.ExecuteReaderAsync()) { 
-    //       if(await reader.ReadAsync())
-    //        {
-    //           studentInfo = new MStudentInformations
-    //           {
-    //               Id = reader[this._dbName.strId].ToString(),
-    //               Name = reader[this._dbName.strName].ToString(),
-    //               Vorname = reader[this._dbName.strVorname].ToString(),
-    //               Email = reader[this._dbName.strEmail].ToString(),
-    //               Straße = reader[this._dbName.strStraße].ToString(),
-    //               Straßenummer = reader[this._dbName.strNummer].ToString(),
-    //               Postleitzahl = reader[this._dbName.strPostleitzahl].ToString(),
-    //               Stadt = reader[this._dbName.strStadt].ToString(),
-    //               Datum = reader[this._dbName.strDatum].ToString(),
-    //               Land = reader[this._dbName.strLand].ToString()
-    //           };
-    //        }
-         
-    //       }
-                               
-            return await this.dbContext.StudentInformations
+      public async Task<List<MStudentInformations>> SearchStudentInfosAsync(string search)
+      {                    
+         return await this.dbContext.StudentInformations
                                         .Where(c => c.UserId == search)
                                         .ToListAsync();
-        }
-
-       
+      }   
     }
 }

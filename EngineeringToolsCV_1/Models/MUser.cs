@@ -10,9 +10,7 @@ namespace EngineeringToolsCV_1.Models
         [Key]
         public string User_Id { get; set;}
         public string Email { get; set; }
-        public string Passwort { get; set; }
-        public string ConfirmPasswort { get; set; }
-        
+        public string Passwort { get; set; }        
         public MStudentInformations mStudentInformations { get; set; }
 		  public ICollection<MStudentWorkInfo> mStudentWorkInfos { get; set; }
 	}

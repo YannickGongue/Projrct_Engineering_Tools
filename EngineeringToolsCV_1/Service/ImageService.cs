@@ -36,6 +36,21 @@ namespace EngineeringToolsCV_1.Service
 			return Path.GetExtension(path);
 		}
 
+		public BitmapImage ConvertToImage(byte[] imageData)
+		{
+			using var ms = new MemoryStream(imageData);
+
+			var image = new BitmapImage();
+
+			image.BeginInit();
+			image.CacheOption = BitmapCacheOption.OnLoad;
+			image.StreamSource = ms;
+			image.EndInit();
+			image.Freeze();
+
+			return image;
+		}
+
 		public ImageSource LoadImage(OpenFileDialog dialog)
 		{
 			

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace EngineeringToolsCV_1.Service
 {
@@ -12,6 +13,7 @@ namespace EngineeringToolsCV_1.Service
 		string FileName (string path);
 	   string FileExtension(string path);
 		ImageSource LoadImage(OpenFileDialog dialog);
+		BitmapImage ConvertToImage(byte[] imageData);
 
 	}
 }

@@ -102,10 +102,9 @@ namespace EngineeringToolsCV_1.ViewModels
             this.mUser.User_Id = this.Username;
             this.mUser.Email = this.EmailAdress;
             this.mUser.Passwort = this.Password;
-            this.mUser.ConfirmPasswort = this.ConfirmPassword;     
 
             // Bestätigung der Passwort.
-            if (mUser.Passwort == mUser.ConfirmPasswort)
+            if (mUser.Passwort == this.ConfirmPassword)
             {
                 //sind die Datensätze eingefügt?
                 if (await this._userInfo.AddUserInfoAsync(this.mUser) == 1)

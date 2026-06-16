@@ -11,14 +11,9 @@ namespace EngineeringToolsCV_1.Models
 {
     public interface IStudentInfo
     {
-
         Task<int> AddStudentInfosAsync(MStudentInformations info);
-
-
-        Task RemoveStudentInfosAsync(string studentId);
-
+        Task<bool> RemoveStudentInfosAsync(string studentId);
         Task<List<MStudentInformations>> SearchStudentInfosAsync(string search);
-
         Task<MStudentInformations> GetStudentInfosByEmailAsync(string email);
 	}
 }
