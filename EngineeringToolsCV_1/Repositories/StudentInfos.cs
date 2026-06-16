@@ -13,12 +13,12 @@ namespace EngineeringToolsCV_1.Repositories
 {
     public class StudentInfos : IStudentInfo
     {
-        private StudentContext dbContext;
+      private StudentContext dbContext;
 
-        public StudentInfos( StudentContext studentContext)
-        {
+      public StudentInfos( StudentContext studentContext)
+      {
             this.dbContext = studentContext;
-        }
+      }
 
 		public async Task<MStudentInformations> GetStudentInfosByEmailAsync(string studentId)
 		{
@@ -30,10 +30,11 @@ namespace EngineeringToolsCV_1.Repositories
 		public async Task<bool> RemoveStudentInfosAsync(string studentId)
       {
          var studentInfo = await GetStudentInfosByEmailAsync(studentId);
-			
-			this.dbContext.StudentInformations.Remove(studentInfo);
-			if( await this.dbContext.SaveChangesAsync() > 0)
-         {
+
+         if(studentInfo != null)
+			{
+				this.dbContext.StudentInformations.Remove(studentInfo);
+			   await this.dbContext.SaveChangesAsync();
 				return true;
 			}
          else

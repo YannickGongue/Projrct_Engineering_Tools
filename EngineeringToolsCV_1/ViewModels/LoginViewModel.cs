@@ -31,7 +31,6 @@ namespace EngineeringToolsCV_1.ViewModels
 		  private UserResetView _UserResetView;
 		  private RegisterViewModel _vmRegister;
 		  private UserResetViewModel _vmUserReset;
-        private DBName _dbName;
 		  private string password;
         private string username;
        
@@ -121,8 +120,8 @@ namespace EngineeringToolsCV_1.ViewModels
 			   this._mUser = mUser;
             this._FiledialogService = fileDialogService;
 
-			   this.Username = "gonguego";
-            this.Password = "dyna1605";
+			   //this.Username = "gonguego";
+      //      this.Password = "dyna1605";
 
             this.SetActivedWindow = true;
             this.UserResetEnabled = true;
@@ -150,7 +149,6 @@ namespace EngineeringToolsCV_1.ViewModels
         private async void ExecuteUserReset(object obj)
         {       
            this._mUser = await this._userInfo.GetUserInfoAsync(Username, Password);
-          this._dbName = new DBName();
 			 this._UserResetView = new UserResetView();
           this._vmUserReset = new UserResetViewModel(this._userInfo, this._mUser);
           this._vmUserReset.SetEmail= this._mUser.Email;
