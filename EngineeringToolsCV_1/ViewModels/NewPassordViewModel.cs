@@ -1,7 +1,11 @@
-﻿using System;
+﻿using EngineeringToolsCV_1.Command;
+using EngineeringToolsCV_1.IRepository;
+using EngineeringToolsCV_1.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace EngineeringToolsCV_1.ViewModels
@@ -9,8 +13,10 @@ namespace EngineeringToolsCV_1.ViewModels
     public class NewPassordViewModel : INotifyPropertyChanged
     {
         private UserResetViewModel _vmUserReset;
+        private IUserInfo _IuserInfo;
+        private IMessageService _messageService;
 
-        private string strBenutzername;
+		  private string strBenutzername;
         private string strPassword;
         private string strPasswordConfirm;
         private bool setActveWindow;
@@ -58,16 +64,32 @@ namespace EngineeringToolsCV_1.ViewModels
             }
         }
 
-        public NewPassordViewModel()
+        public ICommand OnResetCommand { get; set; }
+
+		public NewPassordViewModel( IUserInfo userInfo,
+                                  IMessageService messageService)
         {
-            //this._vmUserReset = vmUserReset;
-            //this._vmUserReset.SetIsEnabled = true;
-            //this._vmUserReset.SetBackground = Brushes.RoyalBlue;
+            this._IuserInfo = userInfo;
+            this._messageService = messageService;
+			
 
+			this.OnResetCommand = new DelegateCommand(ExecuteReset, CanExecute);
+		}
 
-        }
+		private bool CanExecute(object arg)
+		{
+			return true;
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		private async void ExecuteReset(object obj)
+		{
+         if( await this._IuserInfo.UpdateUserInfosAsync(this.strBenutzername, this.strPassword))
+         {
+            this._messageService.ShowErrorMessage("Passwort erfolgreich geändert!");
+			}
+      }
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {

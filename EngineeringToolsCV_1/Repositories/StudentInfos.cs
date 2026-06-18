@@ -34,13 +34,19 @@ namespace EngineeringToolsCV_1.Repositories
          if(studentInfo != null)
 			{
 				this.dbContext.StudentInformations.Remove(studentInfo);
-			   await this.dbContext.SaveChangesAsync();
-				return true;
+			   var affectedRow = await this.dbContext.SaveChangesAsync();
+            if(affectedRow > 0)
+            {
+					return true;
+				}
+            else
+            {
+               return false;
+            }
+
 			}
-         else
-         {
-				return false;
-			}
+			return false;
+
 		}
 
 		public async Task<int> AddStudentInfosAsync(MStudentInformations info)

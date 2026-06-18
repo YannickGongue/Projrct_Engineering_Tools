@@ -148,12 +148,10 @@ namespace EngineeringToolsCV_1.ViewModels
 
         private async void ExecuteUserReset(object obj)
         {       
-           this._mUser = await this._userInfo.GetUserInfoAsync(Username, Password);
-			 this._UserResetView = new UserResetView();
-          this._vmUserReset = new UserResetViewModel(this._userInfo, this._mUser);
-          this._vmUserReset.SetEmail= this._mUser.Email;
-			 this._UserResetView.DataContext = this._vmUserReset;
-			 this._UserResetView.Show();
+			  this._UserResetView = new UserResetView();
+           this._vmUserReset = new UserResetViewModel(this._userInfo, this._messageService,this._mUser);
+			  this._UserResetView.DataContext = this._vmUserReset;
+			  this._UserResetView.Show();
 
 			this.UserResetEnabled = false;
                      

@@ -41,7 +41,7 @@ namespace EngineeringToolsCV_1.Repositories
 			                                     u.Passwort == password);
 		}
 
-		public async Task<bool> UpdateUserInfosAsync(string userId, string email, string password)
+		public async Task<bool> UpdateUserInfosAsync(string userId, string password)
 		{
 			var user = await _stDbContext.Users
 										  .FirstOrDefaultAsync(u => u.User_Id == userId);
@@ -51,7 +51,6 @@ namespace EngineeringToolsCV_1.Repositories
 				return false;
 			}
 
-			user.Email = email;
 			user.Passwort = password;
 
 			await _stDbContext.SaveChangesAsync();
@@ -82,7 +81,7 @@ namespace EngineeringToolsCV_1.Repositories
 			//return dt;
 			return await this._stDbContext.Users
 										.FirstOrDefaultAsync(u =>
-											 u.User_Id == search);
+											 u.Email == search);
 		}
 	}
 }

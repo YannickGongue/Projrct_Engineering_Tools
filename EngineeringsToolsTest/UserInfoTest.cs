@@ -19,13 +19,13 @@ namespace EngineeringsToolsTest
 
 			using var context = new StudentContext(options);
 
-			//context.Users.Add(new MUser
-			//{
-			//	User_Id = "gonguego",
-			//	Passwort = "dyna1605"
-			//});
+			 context.Users.Add(new MUser
+			 {
+			 	User_Id = "gongueg",
+			 	Passwort = "dyna160"
+			  });
 
-			//await context.SaveChangesAsync();
+			 await context.SaveChangesAsync();
 
 			var repository = new UserInfo(context);
 
@@ -43,19 +43,19 @@ namespace EngineeringsToolsTest
 
 			using var context = new StudentContext(options);
 
-			//context.Users.Add(new MUser
-			//{
-			//	User_Id = "gonguego",
-			//	Passwort = "dyna1605"
-			//});
+			 context.Users.Add(new MUser
+			 {
+			 	User_Id = "gonguego",
+			   Passwort = "dyna160"
+			 });
 
-			//await context.SaveChangesAsync();
+			await context.SaveChangesAsync();
 
 			var repository = new UserInfo(context);
 
-			var result = await repository.LoginUserAsync(" ", " ");
+			var result = await repository.LoginUserAsync("gongue", "dyna160");
 
-			Assert.IsNull(result);
+			Assert.IsNotNull(result);
 		}
 	}
 }

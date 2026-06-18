@@ -11,7 +11,7 @@ namespace EngineeringToolsCV_1.IRepository
 	{
 		Task<MUser> GetUserInfoAsync(string id, string password);
 		Task<bool> LoginUserAsync(string strId, string Password);
-		Task<bool> UpdateUserInfosAsync(string userId, string email, string password);
+		Task<bool> UpdateUserInfosAsync(string userId, string password);
 		Task<int> AddUserInfoAsync(MUser info);
 		Task<MUser> SearchUserInfoAsync(string search);
 	}

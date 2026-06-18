@@ -416,6 +416,10 @@ namespace EngineeringToolsCV_1.ViewModels
          {
             this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich gelöscht");
 			}
+         else
+         {
+            this._messageService.ShowErrorMessage("die Einträge wurden nicht gefunden, bitte überprüfen Sie die Eingabe");
+			}
 		}
 
 		private async void ExecuteSearchMethod(object obj)
