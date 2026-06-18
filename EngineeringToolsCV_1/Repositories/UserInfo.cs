@@ -18,7 +18,6 @@ namespace EngineeringToolsCV_1.Repositories
 		public UserInfo( StudentContext stDbContext)
 		{
 			this._stDbContext = stDbContext;
-
 		}
 
 		public async Task<int> AddUserInfoAsync(MUser info)
@@ -44,7 +43,7 @@ namespace EngineeringToolsCV_1.Repositories
 		public async Task<bool> UpdateUserInfosAsync(string userId, string password)
 		{
 			var user = await _stDbContext.Users
-										  .FirstOrDefaultAsync(u => u.User_Id == userId);
+								.FirstOrDefaultAsync(u => u.User_Id == userId);
 
 			if (user == null)
 			{
@@ -60,25 +59,6 @@ namespace EngineeringToolsCV_1.Repositories
 
 		public async Task<MUser> SearchUserInfoAsync(string search)
 		{
-			//string strQueryLogin = String.Format("SELECT * FROM {0} WHERE {1}= @1",
-			//												this._dbName.StrTBL_User,
-			//												this._dbName.strId);
-
-			//using var conn = _connectionFactory.Create();
-			//using var cmd = new SqlCommand();
-			//cmd.Connection = conn;
-
-			//cmd.Parameters.AddWithValue("@1", search);
-			//cmd.CommandType = CommandType.Text;
-			//cmd.CommandText = strQueryLogin;
-
-			//await conn.OpenAsync();
-
-			//var dt = new DataTable();
-			//using var adapter = new SqlDataAdapter(cmd);
-			//adapter.Fill(dt);
-
-			//return dt;
 			return await this._stDbContext.Users
 										.FirstOrDefaultAsync(u =>
 											 u.Email == search);

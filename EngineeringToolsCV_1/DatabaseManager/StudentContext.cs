@@ -14,6 +14,7 @@ namespace EngineeringToolsCV_1.DatabaseManager
 		public DbSet<MUser> Users { get; set; }
 		public DbSet<MStudentInformations> StudentInformations { get; set; }
 		public DbSet<MStudentWorkInfo> StudentWorkInfo { get; set; }
+		public DbSet<MStudentProject> StudentProjects { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -22,6 +23,11 @@ namespace EngineeringToolsCV_1.DatabaseManager
 				  .HasOne<MUser>(c => c.mUsers)
 				  .WithMany(g => g.mStudentWorkInfos)
 			     .HasForeignKey(s => s.UserEmail);
+
+			modelBuilder.Entity<MStudentProject>()
+				  .HasOne<MUser>(c => c.mUsers)
+				  .WithMany(sp => sp.mStudentProjects)
+				  .HasForeignKey(s => s.UserEmail);
 
 
 			modelBuilder.Entity<MUser>()
