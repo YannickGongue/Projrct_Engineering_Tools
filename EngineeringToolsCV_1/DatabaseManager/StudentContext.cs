@@ -22,7 +22,7 @@ namespace EngineeringToolsCV_1.DatabaseManager
 			modelBuilder.Entity<MStudentWorkInfo>()
 				  .HasOne<MUser>(c => c.mUsers)
 				  .WithMany(g => g.mStudentWorkInfos)
-			     .HasForeignKey(s => s.UserEmail);
+			     .HasForeignKey(s => s.UserId);
 
 			modelBuilder.Entity<MStudentProject>()
 				  .HasOne<MUser>(c => c.mUsers)

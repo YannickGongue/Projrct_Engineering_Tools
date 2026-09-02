@@ -61,7 +61,8 @@
        HorizontalAlignment="Right"       
        Cursor="Hand"
        Margin="0,15,-10,2"
-       Foreground="CornflowerBlue"/>
+       Foreground="CornflowerBlue"
+		 IconColor="RoyalBlue"/>
 
 
 		<Controls:IconButton 
@@ -74,7 +75,8 @@
        HorizontalAlignment="Left"            
        Cursor="Hand"
        Margin="-20,15,25,2"
-       Foreground="CornflowerBlue"/>
+       Foreground="CornflowerBlue"
+		 IconColor="RoyalBlue"/>
 		<TextBlock Text="Projekt" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" Width="402"/>
     </Grid>
 </UserControl>

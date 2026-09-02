@@ -178,7 +178,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             ProjektCommand = new NavigateCommand<ProjektViewModel>(
                new LayoutNavigationService<ProjektViewModel>(navigationStore,
-               () => new ProjektViewModel(navigationStore), navigationBar));
+               () => new ProjektViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void executeFormationCommand(NavigationStore navigationStore)
@@ -196,7 +203,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             MediaCommand = new NavigateCommand<SocialMediaViewModel>(
                new LayoutNavigationService<SocialMediaViewModel>(navigationStore,
-               () => new SocialMediaViewModel(navigationStore), navigationBar));
+               () => new SocialMediaViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void executeQualifCommand(NavigationStore navigationStore)
@@ -205,7 +219,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             QualifCommand = new NavigateCommand<QualificationViewModel>(
                new LayoutNavigationService<QualificationViewModel>(navigationStore,
-               () => new QualificationViewModel(navigationStore), navigationBar));
+               () => new QualificationViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void executeActivitiesCommand(NavigationStore navigationStore)

@@ -18,12 +18,12 @@ namespace EngineeringToolsCV_1.ViewModels
       private IFileDialogService _FiledialogService;
       private INavigationBarService _navigationBarService;
       private IMessageService _messageService;
-      private IStudentWorkInfo _userWorkInfo;
-		private IStudentInfo _userInfo;
+      private IStudentWorkInfo _IStudentWorkInfo;
+		private IStudentInfo _IStudentInfo;
       private IImageService _imageService;
 		private NavigationStore navigationStore;
         private MStudentInformations _mStudentInfos;
-        private MStudentWorkInfo _mUserWorkInfo;
+        private MStudentWorkInfo _mStudentWorkInfo;
           
 
         private string strTitel;
@@ -199,23 +199,23 @@ namespace EngineeringToolsCV_1.ViewModels
 
 
         public BerufViewModel(NavigationStore navigationStore, 
-                              IStudentWorkInfo userWorkInfo,
-										IStudentInfo userInfo,
+                              IStudentWorkInfo studentWorkInfo,
+										IStudentInfo IStudentInfo,
 										INavigationBarService navigationBarService,
 										IMessageService messageService,
 										IImageService imageService,
 										IFileDialogService FiledialogService,
 										MStudentInformations mStudentInfos,
-                              MStudentWorkInfo mUserWorkInfo)
+                              MStudentWorkInfo mStudentWorkInfo)
         {
             this.navigationStore = navigationStore;
-            this._userWorkInfo = userWorkInfo;
-			   this._userInfo = userInfo;
+            this._IStudentWorkInfo = studentWorkInfo;
+			   this._IStudentInfo = IStudentInfo;
 			   this._navigationBarService = navigationBarService;
 			   this._messageService = messageService;
             this._imageService = imageService;
 			   this._mStudentInfos = mStudentInfos;
-            this._mUserWorkInfo = mUserWorkInfo;
+            this._mStudentWorkInfo = mStudentWorkInfo;
             this._FiledialogService = FiledialogService;
             this.StrStartDate = new DateTime();
             this.StrEndDate = new DateTime();
@@ -227,12 +227,12 @@ namespace EngineeringToolsCV_1.ViewModels
                () => new DashboardViewModel(navigationStore,
                                             this._navigationBarService,
                                             this._messageService, 
-                                            this._userInfo,
-                                            this._userWorkInfo,
+                                            this._IStudentInfo,
+                                            this._IStudentWorkInfo,
 														  this._imageService,
                                             this._FiledialogService,
                                             this._mStudentInfos,
-                                            this._mUserWorkInfo),
+                                            this._mStudentWorkInfo),
                this._navigationBarService.CreateNavigationBar("Home -> Dashboard")));
 
            this.SaveCommand = new DelegateCommand(ExecuteSaveMethod, CanExecute);
@@ -290,18 +290,18 @@ namespace EngineeringToolsCV_1.ViewModels
                 //else
                 //{
 
-                this._mUserWorkInfo.Titel = this.StrTitel;
-                this._mUserWorkInfo.UserEmail = this.StrEmail;
-                this._mUserWorkInfo.Firma = this.StrUnternehmen;
-                this._mUserWorkInfo.StartDatum = this.StrStartDate.ToString();
-                this._mUserWorkInfo.EndDatum = this.StrEndDate.ToString();
-                this._mUserWorkInfo.Aufgabe = this.SelAufgabe;
-                this._mUserWorkInfo.OrtType = this.StrOrtTyp;
-                this._mUserWorkInfo.Standort = this.StrStandOrt;
-                this._mUserWorkInfo.Skills = this.StrSkills;
-                this._mUserWorkInfo.ArbeitsArt = this.StrBeschäftigung;
+                this._mStudentWorkInfo.Titel = this.StrTitel;
+                this._mStudentWorkInfo.Email = this.StrEmail;
+                this._mStudentWorkInfo.Firma = this.StrUnternehmen;
+                this._mStudentWorkInfo.StartDatum = this.StrStartDate.ToString();
+                this._mStudentWorkInfo.EndDatum = this.StrEndDate.ToString();
+                this._mStudentWorkInfo.Beschreibung = this.StrBeschreibung;
+                this._mStudentWorkInfo.OrtType = this.StrOrtTyp;
+                this._mStudentWorkInfo.Standort = this.StrStandOrt;
+                this._mStudentWorkInfo.Skills = this.StrSkills;
+                this._mStudentWorkInfo.ArbeitsArt = this.StrBeschäftigung;
 
-                    iCount = await this._userWorkInfo.AddWorkInfosAsync(this._mUserWorkInfo);
+                    iCount = await this._IStudentWorkInfo.AddWorkInfosAsync(this._mStudentWorkInfo);
                     if (iCount == 1)
                     {
                         this._messageService.ShowErrorMessage("die Einträgen wurden erfolgreich in die Datenbank hinzugefügt");                

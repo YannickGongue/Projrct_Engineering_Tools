@@ -75,6 +75,8 @@
     <system:String x:Key="TxtBerufserfahrung">Berufserfahrung</system:String>
 	<system:String x:Key="txtProfil">Profil</system:String>
 	<system:String x:Key="txtProjekt">Projekt</system:String>
+	<system:String x:Key="txtQualifikation">Qualifikation</system:String>
+
 
 	<system:String x:Key="ButtonDelete"> Berufserfahrung löschen </system:String>
 

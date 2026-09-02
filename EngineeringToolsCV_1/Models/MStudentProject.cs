@@ -12,6 +12,7 @@ namespace EngineeringToolsCV_1.Models
 		public string ProjectName { get; set; }
 		public string ProjectDescription { get; set; }
 		public string Skills { get; set; }
+		public string UserId { get; set; }
 		public MUser mUsers { get; set; }
 
 

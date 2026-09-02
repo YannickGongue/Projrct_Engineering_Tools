@@ -14,7 +14,6 @@ namespace EngineeringToolsCV_1.Models
 		  public string UserId { get; set; }
 		  public string Name { get; set; }
         public string Vorname { get; set; }
-        //public string ImagePath { get; set; }
         public Byte[] ImageData { get; set; }
         public string ContentType { get; set; }
 		  
