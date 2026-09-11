@@ -194,7 +194,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             FormationCommand = new NavigateCommand<FormationViewModel>(
                new LayoutNavigationService<FormationViewModel>(navigationStore,
-               () => new FormationViewModel(navigationStore), navigationBar));
+               () => new FormationViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void executeSocialMediaCommand(NavigationStore navigationStore)
@@ -235,7 +242,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             this.ActivitiesCommand = new NavigateCommand<ActivitiesViewModel>(
                new LayoutNavigationService<ActivitiesViewModel>(navigationStore,
-               () => new ActivitiesViewModel(navigationStore), navigationBar));
+               () => new ActivitiesViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void executeConfigCommand(NavigationStore navigationStore)
@@ -244,7 +258,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             this.ConfigCommand = new NavigateCommand<ConfigViewModel>(
                new LayoutNavigationService<ConfigViewModel>(navigationStore,
-               () => new ConfigViewModel(navigationStore), navigationBar));
+               () => new ConfigViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void executeInterestCommand(NavigationStore navigationStore)
@@ -253,7 +274,14 @@ namespace EngineeringToolsCV_1.ViewModels
 
             this.InterestCommand = new NavigateCommand<InteresseViewModel>(
                new LayoutNavigationService<InteresseViewModel>(navigationStore,
-               () => new InteresseViewModel(navigationStore), navigationBar));
+               () => new InteresseViewModel(navigationStore, this._imageService,
+															 this._messageService,
+															 this._userInfo,
+															 this._userWorkInfo,
+															 this._mUserWorkInfo,
+															 this._navigationBarService,
+															 this._mStudent,
+															 this._fileDialogService), navigationBar));
         }
 
         private void init()

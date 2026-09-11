@@ -28,7 +28,6 @@
 
     <!-- Personal Data -->
     <system:String x:Key="LabelPersonalData">Personal Data</system:String>
-    <system:String x:Key="LabelTitle">Title* :</system:String>
     <system:String x:Key="LabelNachname">Nachname* :</system:String>
     <system:String x:Key="LabelVorname">Vorname* :</system:String>
     <system:String x:Key="LabelEmail">Email* :</system:String>
@@ -76,6 +75,13 @@
 	<system:String x:Key="txtProfil">Profil</system:String>
 	<system:String x:Key="txtProjekt">Projekt</system:String>
 	<system:String x:Key="txtQualifikation">Qualifikation</system:String>
+	<system:String x:Key="txtSocialeMedia">Soziale Medien</system:String>
+	<system:String x:Key="txtFormation">Ausbildung</system:String>
+	<system:String x:Key="txtInteressen">Interessen</system:String>
+	<system:String x:Key="txtActivities"> Aktivitäten</system:String>
+	<system:String x:Key="txtConfiguration"> Konfiguration</system:String>
+
+
 
 
 	<system:String x:Key="ButtonDelete"> Berufserfahrung löschen </system:String>

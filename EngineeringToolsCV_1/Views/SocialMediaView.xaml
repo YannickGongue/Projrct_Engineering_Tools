@@ -44,7 +44,7 @@ CornerRadius="10"
 VerticalAlignment="Top"/>
 
 		<TextBlock
-Text="{StaticResource txtQualifikation}" 
+Text="{StaticResource txtSocialeMedia}" 
 VerticalAlignment ="Top" 
 HorizontalAlignment="Center"  
 FontSize="22"

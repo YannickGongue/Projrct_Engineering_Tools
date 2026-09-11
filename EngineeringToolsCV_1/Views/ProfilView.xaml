@@ -78,9 +78,19 @@ VerticalAlignment="Top"/>
     Foreground="CornflowerBlue"
 	 IconColor="RoyalBlue"/>
 
-		<TextBlock Text="Profil"
-					  VerticalAlignment="Center" 
-					  HorizontalAlignment="Center" 
-					  FontSize="50" Width="402"/>
+		<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center" 
+						Margin="0,100,0,0"
+						ScrollViewer.VerticalScrollBarVisibility="Visible"
+						>
+			<TextBlock Text="Profil"
+			  VerticalAlignment="Center" 
+			  HorizontalAlignment="Center" 
+			  FontSize="50" Width="402"/>
+		</StackPanel>
+
+		
+		
 	</Grid>
 </UserControl>
