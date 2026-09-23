@@ -62,7 +62,17 @@ namespace EngineeringToolsCV_1
 			services.AddTransient<LoginViewModel>();
 			services.AddTransient<RegisterViewModel>();
 			services.AddTransient<UserResetViewModel>();
-         services.AddTransient<NewPassordViewModel>();		
+         services.AddTransient<NewPassordViewModel>();
+			services.AddTransient<InformationViewModel>();
+			services.AddTransient<InteresseViewModel>();
+			services.AddTransient<FormationViewModel>();
+			services.AddTransient<DashboardViewModel>();
+			services.AddTransient<ConfigViewModel>();
+			services.AddTransient<BerufViewModel>();
+			services.AddTransient<ActivitiesViewModel>();
+			services.AddTransient<ProfilViewModel>();
+			services.AddTransient<SocialMediaViewModel>();
+			services.AddTransient<QualificationViewModel>();
 
 			services.AddTransient<IUserInfo, UserInfo>();
 			services.AddTransient<IStudentInfo, StudentInfos>();
